@@ -1,0 +1,53 @@
+{
+  "^f3*": {
+    ".*": {
+      "^col_*": {
+        "type": "float"
+      },
+      "^coverage_from_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^coverage_through_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^election_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "^sa": {
+    ".*": {
+      "^contribution_aggregate": {
+        "type": "float"
+      },
+      "^contribution_amount": {
+        "type": "float"
+      },
+      "^contribution_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "^sb": {
+    ".*": {
+      "^expenditure_amount": {
+        "type": "float"
+      },
+      "^semi_annual_refunded_bundled_amt": {
+        "type": "float"
+      },
+      "^expenditure_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  }
+}

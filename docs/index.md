@@ -1,3 +1,8 @@
+---
+layout: default
+title: Arduino Controller for the Blackmagic Micro Studio Camera
+---
+
 # fecfile
 Python parser for the .fec file format
 
