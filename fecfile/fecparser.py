@@ -55,8 +55,9 @@ def parseline(line, version):
                 if re.match(v, ver, re.IGNORECASE):
                     out = {}
                     for i in range(len(mappings[mapping][v])):
+                        val = fields[i] if i < len(fields) else ''
                         k = mappings[mapping][v][i]
-                        out[k] = getTyped(form, ver, k, fields[i])
+                        out[k] = getTyped(form, ver, k, val)
                     return out
     return None
 
@@ -75,7 +76,9 @@ def getTyped(form, version, field, value):
                             if property['type'] == 'integer':
                                 return int(value)
                             if property['type'] == 'float':
-                                return None if value == '' else float(value)
+                                if value == '' or value.lower() == 'none':
+                                    return None
+                                return float(value)
                             if property['type'] == 'date':
                                 format = property['format']
                                 if value == '':

@@ -1,4 +1,44 @@
 {
+  "^f1[an]": {
+    ".*": {
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^effective_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "(^f1m[a|n])": {
+    ".*": {
+      ".*_date$": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "(^f2$)|(^f2[^4])": {
+    ".*": {
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "(^f24$)|(^f24[an])": {
+    ".*": {
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
   "^f3.*": {
     ".*": {
       "^col_": {
@@ -55,6 +95,33 @@
       },
       "^expenditure_amount": {
         "type": "float"
+      }
+    }
+  },
+  "(^f6$)|(^f6[an])": {
+    ".*": {
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "^f65": {
+    ".*": {
+      "^contribution_amount": {
+        "type": "float"
+      },
+      "^contribution_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "^f99": {
+    ".*": {
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
       }
     }
   },
@@ -118,6 +185,28 @@
         "type": "float"
       },
       "^payment_amount_this_period": {
+        "type": "float"
+      }
+    }
+  },
+  "^se": {
+    ".*": {
+      "^calendar_y_t_d_per_election_office": {
+        "type": "float"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^disbursement_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^dissemination_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^expenditure_amount": {
         "type": "float"
       }
     }
