@@ -1,7 +1,7 @@
 {
-  "^f3*": {
+  "^f3.*": {
     ".*": {
-      "^col_*": {
+      "^col_": {
         "type": "float"
       },
       "^coverage_from_date": {
@@ -19,6 +19,42 @@
       "^election_date": {
         "type": "date",
         "format": "%Y%m%d"
+      }
+    }
+  },
+  "^f5[na]": {
+    ".*": {
+      "^coverage_from_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^coverage_through_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^total_contribution": {
+        "type": "float"
+      },
+      "^total_independent_expenditure": {
+        "type": "float"
+      }
+    }
+  },
+  "^f57": {
+    ".*": {
+      "^calendar_y_t_d_per_election_office": {
+        "type": "float"
+      },
+      "^dissemination_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^expenditure_amount": {
+        "type": "float"
       }
     }
   },
@@ -47,6 +83,42 @@
       "^expenditure_date": {
         "type": "date",
         "format": "%Y%m%d"
+      }
+    }
+  },
+  "^sc": {
+    ".*": {
+      "^loan_amount_original": {
+        "type": "float"
+      },
+      "^loan_balance": {
+        "type": "float"
+      },
+      "^loan_incurred_date_terms": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^loan_interest_rate_terms": {
+        "type": "float"
+      },
+      "^loan_payment_to_date": {
+        "type": "float"
+      }
+    }
+  },
+  "^sd": {
+    ".*": {
+      "^balance_at_close_this_period": {
+        "type": "float"
+      },
+      "^beginning_balance_this_period": {
+        "type": "float"
+      },
+      "^incurred_amount_this_period": {
+        "type": "float"
+      },
+      "^payment_amount_this_period": {
+        "type": "float"
       }
     }
   }

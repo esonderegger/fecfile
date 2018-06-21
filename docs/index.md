@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Arduino Controller for the Blackmagic Micro Studio Camera
+title: fecfile: a python parser for the .fec file format
 ---
 
 # fecfile
-Python parser for the .fec file format
+a python parser for the .fec file format
 
 This is still in very early testing. The goal of this project is to take in a string in .fec format, either from the [bulk data](https://www.fec.gov/data/advanced/?tab=bulk-data) zip files or from an http request like [this](http://docquery.fec.gov/dcdev/posted/1229017.fec) and output a python dictionary, with native types for the number and date/time fields.
 

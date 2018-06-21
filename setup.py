@@ -7,12 +7,13 @@ with open('README.md', 'r') as file:
 
 requirements = [
     'pytz>=2018.4',
+    'requests>=2.19.1',
     ]
 
 
 setup(
     name='fecfile',
-    version='0.1.4',
+    version='0.1.5',
     description='Python parser for the .fec file format',
     long_description=long_description,
     long_description_content_type="text/markdown",
