@@ -78,7 +78,8 @@ def getTyped(form, version, field, value):
                             if property['type'] == 'float':
                                 if value == '' or value.lower() == 'none':
                                     return None
-                                return float(value)
+                                sanitized = value.replace('%', '')
+                                return float(sanitized)
                             if property['type'] == 'date':
                                 format = property['format']
                                 if value == '':

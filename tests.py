@@ -70,6 +70,14 @@ class HandleF1FromWebForms(unittest.TestCase):
         self.assertIsInstance(parsed['filing']['effective_date'], datetime)
 
 
+class HandlePercentInNumber(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1235309)
+        self.assertEqual(parsed['header']['fec_version'], '8.2')
+        loan_itemization = parsed['itemizations']['Schedule C'][3]
+        self.assertEqual(loan_itemization['loan_interest_rate'], 5.0)
+
+
 class ConvertZipFileToJSON(unittest.TestCase):
     def test_convert(self):
         date_str = '20180616'
