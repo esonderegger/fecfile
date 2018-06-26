@@ -62,6 +62,9 @@ def parseline(line, version):
     return None
 
 
+nones = ['none', 'n/a']
+
+
 def getTyped(form, version, field, value):
     for mapping in types.keys():
         if re.match(mapping, form, re.IGNORECASE):
@@ -76,7 +79,7 @@ def getTyped(form, version, field, value):
                             if property['type'] == 'integer':
                                 return int(value)
                             if property['type'] == 'float':
-                                if value == '' or value.lower() == 'none':
+                                if value == '' or value.lower() in nones:
                                     return None
                                 sanitized = value.replace('%', '')
                                 return float(sanitized)

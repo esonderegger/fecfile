@@ -78,6 +78,14 @@ class HandlePercentInNumber(unittest.TestCase):
         self.assertEqual(loan_itemization['loan_interest_rate'], 5.0)
 
 
+class HandleNANumber(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1223616)
+        self.assertEqual(parsed['filing']['committee_name'], 'Leann for Iowa')
+        loan_itemization = parsed['itemizations']['Schedule C'][0]
+        self.assertEqual(loan_itemization['loan_interest_rate_terms'], None)
+
+
 class ConvertZipFileToJSON(unittest.TestCase):
     def test_convert(self):
         date_str = '20180616'
