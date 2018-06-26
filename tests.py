@@ -75,7 +75,7 @@ class HandlePercentInNumber(unittest.TestCase):
         parsed = fecfile.from_http(1235309)
         self.assertEqual(parsed['header']['fec_version'], '8.2')
         loan_itemization = parsed['itemizations']['Schedule C'][3]
-        self.assertEqual(loan_itemization['loan_interest_rate'], 5.0)
+        self.assertEqual(loan_itemization['loan_interest_rate'], '5.00%')
 
 
 class HandleNANumber(unittest.TestCase):
@@ -83,7 +83,7 @@ class HandleNANumber(unittest.TestCase):
         parsed = fecfile.from_http(1223616)
         self.assertEqual(parsed['filing']['committee_name'], 'Leann for Iowa')
         loan_itemization = parsed['itemizations']['Schedule C'][0]
-        self.assertEqual(loan_itemization['loan_interest_rate_terms'], None)
+        self.assertEqual(loan_itemization['loan_interest_rate_terms'], 'N/A')
 
 
 class ConvertZipFileToJSON(unittest.TestCase):

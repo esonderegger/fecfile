@@ -165,9 +165,6 @@
         "type": "date",
         "format": "%Y%m%d"
       },
-      "^loan_interest_rate": {
-        "type": "float"
-      },
       "^loan_payment_to_date": {
         "type": "float"
       }
