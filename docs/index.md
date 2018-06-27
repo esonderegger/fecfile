@@ -1,6 +1,6 @@
 ---
 layout: default
-title: fecfile: a python parser for the .fec file format
+title: fecfile&#58; a python parser for the .fec file format
 ---
 
 # fecfile
@@ -13,10 +13,12 @@ The goal of this project is to parse data in the .fec format and return a native
 ## Installation
 To get started, install from [pypi](https://pypi.org/project/fecfile/) by running the following command in your preferred terminal:
 
-    pip install fecfile
+```shell
+pip install fecfile
+```
 
 ## Usage (the hard way)
-```
+```python
 import fecfile
 import json
 
@@ -27,7 +29,7 @@ with open('1229017.fec') as file:
 
 or:
 
-```
+```python
 import fecfile
 import json
 import requests
@@ -42,7 +44,7 @@ Note: the docquery.fec.gov urls cause problems with the requests library when a 
 
 ## Usage (the easy way)
 
-```
+```python
 import fecfile
 import json
 
@@ -58,27 +60,27 @@ Note the `default=str` parameter - that allows serializing to json dictionaries 
 
 Assuming you already have Python3 and the ability to create virtual environments installed, first clone this repository from github and cd into it:
 
-```
+```shell
 git clone https://github.com/esonderegger/fecfile.git
 cd fecfile
 ```
 
 Then create a virtual environment for this project (I use the following commands, but there are several ways to get the desired result):
 
-```
+```shell
 python3 -m venv ~/.virtualenvs/fecfile
 source ~/.virtualenvs/fecfile/bin/activate
 ```
 
 Next, install the dependencies:
 
-```
+```shell
 python setup.py
 ```
 
 Finally, make some changes, and run:
 
-```
+```shell
 python tests.py
 ```
 

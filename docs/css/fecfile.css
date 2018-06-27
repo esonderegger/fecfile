@@ -2,17 +2,34 @@ body {
   font-size: 18px;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
-  margin: 2em auto;
-  max-width: 36em;
+  margin: 1em 2em;
   line-height: 1.5;
   color: #444;
-  padding: 0 0.5em;
 }
 h1, h2, h3 {
   line-height: 1.2;
+  max-width: 40rem;
+  margin: .5em auto;
+}
+p, ul {
+  max-width: 40rem;
+  margin: 1em auto;
+}
+a {
+  color: #268bd2;
 }
 
-.highlight { background-color: #002b36; color: #93a1a1; }
+pre {
+  background-color: #002b36;
+  border-radius: .75em;
+  color: #93a1a1;
+  font-size: .9em;
+  max-width: 42em;
+  overflow-x: auto;
+  margin: 1em auto;
+  padding: 1em;
+}
+
 .highlight .c { color: #759299; }
 .highlight .err { color: #93a1a1; }
 .highlight .g { color: #93a1a1; }
