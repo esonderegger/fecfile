@@ -9,6 +9,11 @@ def loads(input):
 def from_http(file_number):
     url = 'http://docquery.fec.gov/dcdev/posted/{n}.fec'.format(n=file_number)
     r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+    if r.status_code == 404:
+        url = 'http://docquery.fec.gov/paper/posted/{n}.fec'.format(
+            n=file_number
+        )
+        r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
     return fecparser.loads(r.text)
 
 

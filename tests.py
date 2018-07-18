@@ -114,5 +114,14 @@ class ConvertZipFileToJSON(unittest.TestCase):
         shutil.rmtree(json_dir)
 
 
+class SenatePaperFiling(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1226815)
+        filing = parsed['filing']
+        self.assertEqual(filing['committee_name'], 'FRIENDS OF MARIA')
+        first_a = parsed['itemizations']['Schedule A'][0]
+        self.assertEqual(first_a['contribution_amount'], 25.0)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -22,13 +22,12 @@ def loads(input):
     version = None
     lines = input.split('\n')
     out = {'itemizations': {}, 'text': [], 'header': {}, 'filing': {}}
+    out['header'], version, header_length = parse_header(lines)
+    lines = lines[header_length:]
     for i in range(len(lines)):
         line = lines[i]
         parsed = parseline(line, version)
-        if parsed and 'fec_version' in parsed:
-            version = parsed['fec_version']
-            out['header'] = parsed
-        elif i < 2:
+        if i < 1:
             out['filing'] = parsed
         elif parsed:
             if 'form_type' in parsed:
@@ -42,6 +41,18 @@ def loads(input):
             else:
                 out['text'].append(parsed)
     return out
+
+
+def parse_header(lines):
+    if lines[0].startswith('/*'):
+        raise Exception('pre-version 3 not implemented yet')
+    if chr(0x1c) in lines[0]:
+        fields = lines[0].split(chr(0x1c))
+        if fields[1] == 'FEC':
+            parsed = parseline(lines[0], fields[2])
+            return parsed, fields[2], 1
+        parsed = parseline(lines[0], fields[1])
+        return parsed, fields[1], 1
 
 
 def parseline(line, version):
