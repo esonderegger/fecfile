@@ -100,8 +100,6 @@ class ConvertZipFileToJSON(unittest.TestCase):
         num_files = len(files)
         for f in sorted(files):
             parsed = fecfile.from_file(fec_dir + '/' + f)
-            # if type(parsed['filing']['date_signed']) == str:
-            #     fecfile.print_example(parsed)
             self.assertIsInstance(parsed['filing']['date_signed'], datetime)
             outpath = json_dir + '/' + f[0:-3] + 'json'
             with open(outpath, 'w') as outf:
@@ -121,6 +119,32 @@ class SenatePaperFiling(unittest.TestCase):
         self.assertEqual(filing['committee_name'], 'FRIENDS OF MARIA')
         first_a = parsed['itemizations']['Schedule A'][0]
         self.assertEqual(first_a['contribution_amount'], 25.0)
+
+
+class V5Filing(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(92888)
+        filing = parsed['filing']
+        self.assertEqual(
+            filing['committee_name'],
+            'Mecklenburg County Republican Party'
+            )
+        sched_b = parsed['itemizations']['Schedule B']
+        self.assertEqual(len(sched_b), 5)
+        self.assertEqual(sched_b[0]['expenditure_amount'], 500.0)
+
+
+class V3Filing(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(52888)
+        filing = parsed['filing']
+        self.assertEqual(
+            filing['committee_name'],
+            'KEEGAN 2002'
+            )
+        sched_b = parsed['itemizations']['Schedule B']
+        self.assertEqual(len(sched_b), 55)
+        self.assertEqual(sched_b[0]['expenditure_amount'], 243.84)
 
 
 if __name__ == '__main__':

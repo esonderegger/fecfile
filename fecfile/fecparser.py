@@ -1,5 +1,6 @@
 from datetime import datetime
 from pytz import timezone
+import csv
 import json
 import os
 import re
@@ -48,15 +49,24 @@ def parse_header(lines):
         raise Exception('pre-version 3 not implemented yet')
     if chr(0x1c) in lines[0]:
         fields = lines[0].split(chr(0x1c))
-        if fields[1] == 'FEC':
-            parsed = parseline(lines[0], fields[2])
-            return parsed, fields[2], 1
-        parsed = parseline(lines[0], fields[1])
-        return parsed, fields[1], 1
+    else:
+        reader = csv.reader([lines[0]])
+        fields = next(reader)
+    if fields[1] == 'FEC':
+        parsed = parseline(lines[0], fields[2])
+        return parsed, fields[2], 1
+    parsed = parseline(lines[0], fields[1])
+    return parsed, fields[1], 1
 
 
 def parseline(line, version):
-    fields = line.split(chr(0x1c))
+    if version.startswith('P') or float(version) > 5.9:
+        fields = line.split(chr(0x1c))
+    else:
+        reader = csv.reader([line])
+        fields = next(reader)
+    if len(fields) < 2:
+        return None
     for mapping in mappings.keys():
         form = fields[0]
         if re.match(mapping, form, re.IGNORECASE):
