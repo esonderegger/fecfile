@@ -147,5 +147,41 @@ class V3Filing(unittest.TestCase):
         self.assertEqual(sched_b[0]['expenditure_amount'], 243.84)
 
 
+class CommaInCSVFiling(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(22888)
+        filing = parsed['filing']
+        self.assertEqual(
+            filing['committee_name'],
+            'PHOENIX FIRE FIGHTERS, LOCAL 493, FIRE PAC COMMITTEE'
+            )
+        sched_b = parsed['itemizations']['Schedule B']
+        self.assertEqual(len(sched_b), 48)
+        self.assertEqual(sched_b[0]['expenditure_amount'], 250.0)
+
+
+class V2Filing(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(12888)
+        filing = parsed['filing']
+        self.assertEqual(
+            filing['committee_name'],
+            'Defend America PAC'
+            )
+        sched_b = parsed['itemizations']['Schedule B']
+        self.assertEqual(len(sched_b), 6)
+        self.assertEqual(sched_b[0]['expenditure_amount'], 1802.0)
+
+
+class V1Filing(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(130)
+        filing = parsed['filing']
+        self.assertEqual(filing['committee_id'], 'C00252791')
+        sched_b = parsed['itemizations']['Schedule B']
+        self.assertEqual(len(sched_b), 4)
+        self.assertEqual(sched_b[0]['expenditure_amount'], 286.61)
+
+
 if __name__ == '__main__':
     unittest.main()

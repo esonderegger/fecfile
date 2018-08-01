@@ -6,6 +6,22 @@ import os
 import re
 
 
+class FecParserTypeError(Exception):
+    """when data in an FEC filing doesn't match types.json"""
+    def __init__(self, opts, msg=None):
+        if msg is None:
+            msg = ('cannot parse value: {v}, as type: {t} ,for field: {f}, '
+                   'in form: {o}, version: {r}').format(
+                v=opts['value'],
+                t=opts['type'],
+                f=opts['field'],
+                o=opts['form'],
+                r=opts['version'],
+            )
+        super(FecParserTypeError, self).__init__(msg)
+        self.car = opts
+
+
 this_file = os.path.abspath(__file__)
 this_dir = os.path.dirname(this_file)
 mappings_file = os.path.join(this_dir, 'mappings.json')
@@ -46,7 +62,23 @@ def loads(input):
 
 def parse_header(lines):
     if lines[0].startswith('/*'):
-        raise Exception('pre-version 3 not implemented yet')
+        header_size = 1
+        header = {'schedule_counts': {}}
+        schedule_counts = False
+        while not lines[header_size].startswith('/*'):
+            this_line = lines[header_size]
+            if this_line.startswith('Schedule_Counts'):
+                schedule_counts = True
+            else:
+                header_fields = this_line.split('=')
+                k = header_fields[0].strip()
+                v = header_fields[1].strip()
+                if schedule_counts:
+                    header['schedule_counts'][k] = int(v)
+                else:
+                    header[k] = v
+            header_size += 1
+        return header, header['FEC_Ver_#'], header_size + 1
     if chr(0x1c) in lines[0]:
         fields = lines[0].split(chr(0x1c))
     else:
@@ -72,7 +104,7 @@ def parseline(line, version):
         if re.match(mapping, form, re.IGNORECASE):
             versions = mappings[mapping].keys()
             for v in versions:
-                ver = version if version else fields[2]
+                ver = version if float(version) > 2.9 else '3.0'
                 if re.match(v, ver, re.IGNORECASE):
                     out = {}
                     for i in range(len(mappings[mapping][v])):
@@ -96,20 +128,31 @@ def getTyped(form, version, field, value):
                     prop_keys = properties.keys()
                     for prop_key in prop_keys:
                         if re.match(prop_key, field, re.IGNORECASE):
-                            property = properties[prop_key]
-                            if property['type'] == 'integer':
-                                return int(value)
-                            if property['type'] == 'float':
-                                if value == '' or value.lower() in nones:
-                                    return None
-                                sanitized = value.replace('%', '')
-                                return float(sanitized)
-                            if property['type'] == 'date':
-                                format = property['format']
-                                if value == '':
-                                    return None
-                                parsed_date = datetime.strptime(value, format)
-                                return eastern.localize(parsed_date)
+                            prop = properties[prop_key]
+                            try:
+                                if prop['type'] == 'integer':
+                                    return int(value)
+                                if prop['type'] == 'float':
+                                    if value == '' or value.lower() in nones:
+                                        return None
+                                    sanitized = value.replace('%', '')
+                                    return float(sanitized)
+                                if prop['type'] == 'date':
+                                    format = prop['format']
+                                    if value == '':
+                                        return None
+                                    parsed_date = datetime.strptime(
+                                        value,
+                                        format)
+                                    return eastern.localize(parsed_date)
+                            except ValueError:
+                                raise FecParserTypeError({
+                                    'form': form,
+                                    'version': version,
+                                    'field': field,
+                                    'value': value,
+                                    'type': prop['type']
+                                })
     return value
 
 
