@@ -89,7 +89,7 @@ I would love some help with this, particularly with the mapping from strings to 
 
 Almost too much to list:
 
-- Handle files from before v6 when they were comma-delimited
+- ~~Handle files from before v6 when they were comma-delimited~~
 - create a `dumps` method for writing .fec files for round-trip tests
 - add more types to the types.json file
 - elegantly handle errors
