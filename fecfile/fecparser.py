@@ -104,7 +104,11 @@ def parseline(line, version):
         if re.match(mapping, form, re.IGNORECASE):
             versions = mappings[mapping].keys()
             for v in versions:
-                ver = version if float(version) > 2.9 else '3.0'
+                # remove when 1.x and 2.x are in fech-sources
+                if version.startswith('1.') or version.startswith('2.'):
+                    ver = '3.0'
+                else:
+                    ver = version
                 if re.match(v, ver, re.IGNORECASE):
                     out = {}
                     for i in range(len(mappings[mapping][v])):
