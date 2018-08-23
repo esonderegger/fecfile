@@ -121,6 +121,16 @@ class SenatePaperFiling(unittest.TestCase):
         self.assertEqual(first_a['contribution_amount'], 25.0)
 
 
+class InauguralCommitteeFiling(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1160672)
+        filing = parsed['filing']
+        comm_name = '58TH PRESIDENTIAL INAUGURAL COMMITTEE'
+        self.assertEqual(filing['committee_name'], comm_name)
+        first_itemization = parsed['itemizations']['F132'][0]
+        self.assertEqual(first_itemization['donation_amount'], 100.0)
+
+
 class V5Filing(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(92888)

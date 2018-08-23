@@ -23,6 +23,29 @@
       }
     }
   },
+  "^f13[an]": {
+    ".*": {
+      ".*_date$": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "(^f132)|(^f133)": {
+    ".*": {
+      ".*_date$": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      ".*_amount$": {
+        "type": "float"
+      }
+    }
+  },
   "(^f2$)|(^f2[^4])": {
     ".*": {
       "^date_signed": {
