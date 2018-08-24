@@ -131,6 +131,16 @@ class InauguralCommitteeFiling(unittest.TestCase):
         self.assertEqual(first_itemization['donation_amount'], 100.0)
 
 
+class UnnecessaryQuotes(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1157513)
+        filing = parsed['filing']
+        comm_name = 'Friends of Dave Brat Inc.'
+        self.assertEqual(filing['committee_name'], comm_name)
+        first_itemization = parsed['itemizations']['Schedule A'][0]
+        self.assertEqual(first_itemization['contribution_amount'], 1500.0)
+
+
 class V5Filing(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(92888)

@@ -60,6 +60,21 @@ def loads(input):
     return out
 
 
+def fields_from_line(line):
+    if chr(0x1c) in line:
+        fields = line.split(chr(0x1c))
+    else:
+        reader = csv.reader([line])
+        fields = next(reader)
+    for field in fields:
+        if field.startswith('"') and field.endswith('"'):
+            field = field[1:-1]
+    return list(map(
+        lambda x: x[1:-1] if (x.startswith('"') and x.endswith('"')) else x,
+        fields
+    ))
+
+
 def parse_header(lines):
     if lines[0].startswith('/*'):
         header_size = 1
@@ -79,11 +94,7 @@ def parse_header(lines):
                     header[k] = v
             header_size += 1
         return header, header['FEC_Ver_#'], header_size + 1
-    if chr(0x1c) in lines[0]:
-        fields = lines[0].split(chr(0x1c))
-    else:
-        reader = csv.reader([lines[0]])
-        fields = next(reader)
+    fields = fields_from_line(lines[0])
     if fields[1] == 'FEC':
         parsed = parseline(lines[0], fields[2])
         return parsed, fields[2], 1
@@ -92,11 +103,7 @@ def parse_header(lines):
 
 
 def parseline(line, version):
-    if version.startswith('P') or float(version) > 5.9:
-        fields = line.split(chr(0x1c))
-    else:
-        reader = csv.reader([line])
-        fields = next(reader)
+    fields = fields_from_line(line)
     if len(fields) < 2:
         return None
     for mapping in mappings.keys():
