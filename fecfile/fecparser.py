@@ -19,7 +19,18 @@ class FecParserTypeError(Exception):
                 r=opts['version'],
             )
         super(FecParserTypeError, self).__init__(msg)
-        self.car = opts
+
+
+class FecParserMissingMappingError(Exception):
+    """when a line in an FEC filing doesn't have a form/version mapping"""
+    def __init__(self, opts, msg=None):
+        if msg is None:
+            msg = ('cannot parse version {v} of form {f} - '
+                   'no mapping found').format(
+                v=opts['version'],
+                f=opts['form'],
+            )
+        super(FecParserMissingMappingError, self).__init__(msg)
 
 
 this_file = os.path.abspath(__file__)
@@ -111,19 +122,17 @@ def parseline(line, version):
         if re.match(mapping, form, re.IGNORECASE):
             versions = mappings[mapping].keys()
             for v in versions:
-                # remove when 1.x and 2.x are in fech-sources
-                if version.startswith('1.') or version.startswith('2.'):
-                    ver = '3.0'
-                else:
-                    ver = version
-                if re.match(v, ver, re.IGNORECASE):
+                if re.match(v, version, re.IGNORECASE):
                     out = {}
                     for i in range(len(mappings[mapping][v])):
                         val = fields[i] if i < len(fields) else ''
                         k = mappings[mapping][v][i]
-                        out[k] = getTyped(form, ver, k, val)
+                        out[k] = getTyped(form, version, k, val)
                     return out
-    return None
+    raise FecParserMissingMappingError({
+        'form': form,
+        'version': version,
+    })
 
 
 nones = ['none', 'n/a']
