@@ -10,13 +10,14 @@ class FecParserTypeError(Exception):
     """when data in an FEC filing doesn't match types.json"""
     def __init__(self, opts, msg=None):
         if msg is None:
-            msg = ('cannot parse value: {v}, as type: {t} ,for field: {f}, '
-                   'in form: {o}, version: {r}').format(
+            msg = ('cannot parse value: {v}, as type: {t},for field: {f}, '
+                   'in form: {o}, version: {r} (line {n})').format(
                 v=opts['value'],
                 t=opts['type'],
                 f=opts['field'],
                 o=opts['form'],
                 r=opts['version'],
+                n=opts['line_num'] + 1,
             )
         super(FecParserTypeError, self).__init__(msg)
 
@@ -51,11 +52,10 @@ def loads(input):
     lines = input.split('\n')
     out = {'itemizations': {}, 'text': [], 'header': {}, 'filing': {}}
     out['header'], version, header_length = parse_header(lines)
-    lines = lines[header_length:]
-    for i in range(len(lines)):
+    for i in range(header_length, len(lines)):
         line = lines[i]
-        parsed = parseline(line, version)
-        if i < 1:
+        parsed = parseline(line, version, i)
+        if i < header_length + 1:
             out['filing'] = parsed
         elif parsed:
             if 'form_type' in parsed:
@@ -107,13 +107,13 @@ def parse_header(lines):
         return header, header['FEC_Ver_#'], header_size + 1
     fields = fields_from_line(lines[0])
     if fields[1] == 'FEC':
-        parsed = parseline(lines[0], fields[2])
+        parsed = parseline(lines[0], fields[2], 0)
         return parsed, fields[2], 1
-    parsed = parseline(lines[0], fields[1])
+    parsed = parseline(lines[0], fields[1], 0)
     return parsed, fields[1], 1
 
 
-def parseline(line, version):
+def parseline(line, version, line_num):
     fields = fields_from_line(line)
     if len(fields) < 2:
         return None
@@ -127,7 +127,7 @@ def parseline(line, version):
                     for i in range(len(mappings[mapping][v])):
                         val = fields[i] if i < len(fields) else ''
                         k = mappings[mapping][v][i]
-                        out[k] = getTyped(form, version, k, val)
+                        out[k] = getTyped(form, version, k, val, line_num)
                     return out
     raise FecParserMissingMappingError({
         'form': form,
@@ -138,7 +138,7 @@ def parseline(line, version):
 nones = ['none', 'n/a']
 
 
-def getTyped(form, version, field, value):
+def getTyped(form, version, field, value, line_num):
     for mapping in types.keys():
         if re.match(mapping, form, re.IGNORECASE):
             versions = types[mapping].keys()
@@ -171,7 +171,8 @@ def getTyped(form, version, field, value):
                                     'version': version,
                                     'field': field,
                                     'value': value,
-                                    'type': prop['type']
+                                    'type': prop['type'],
+                                    'line_num': line_num,
                                 })
     return value
 
