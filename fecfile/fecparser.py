@@ -4,22 +4,12 @@ import csv
 import json
 import os
 import re
+import warnings
 
 
-class FecParserTypeError(Exception):
+class FecParserTypeWarning(UserWarning):
     """when data in an FEC filing doesn't match types.json"""
-    def __init__(self, opts, msg=None):
-        if msg is None:
-            msg = ('cannot parse value: {v}, as type: {t},for field: {f}, '
-                   'in form: {o}, version: {r} (line {n})').format(
-                v=opts['value'],
-                t=opts['type'],
-                f=opts['field'],
-                o=opts['form'],
-                r=opts['version'],
-                n=opts['line_num'] + 1,
-            )
-        super(FecParserTypeError, self).__init__(msg)
+    pass
 
 
 class FecParserMissingMappingError(Exception):
@@ -93,18 +83,18 @@ def parse_header(lines):
         schedule_counts = False
         while not lines[header_size].startswith('/*'):
             this_line = lines[header_size]
-            if this_line.startswith('Schedule_Counts'):
+            if this_line.lower().startswith('schedule_counts'):
                 schedule_counts = True
             else:
                 header_fields = this_line.split('=')
-                k = header_fields[0].strip()
-                v = header_fields[1].strip()
+                k = header_fields[0].strip().lower()
+                v = header_fields[1].strip().lower()
                 if schedule_counts:
                     header['schedule_counts'][k] = int(v)
                 else:
                     header[k] = v
             header_size += 1
-        return header, header['FEC_Ver_#'], header_size + 1
+        return header, header['fec_ver_#'], header_size + 1
     fields = fields_from_line(lines[0])
     if fields[1] == 'FEC':
         parsed = parseline(lines[0], fields[2], 0)
@@ -166,14 +156,20 @@ def getTyped(form, version, field, value, line_num):
                                         format)
                                     return eastern.localize(parsed_date)
                             except ValueError:
-                                raise FecParserTypeError({
-                                    'form': form,
-                                    'version': version,
-                                    'field': field,
-                                    'value': value,
-                                    'type': prop['type'],
-                                    'line_num': line_num,
-                                })
+                                warnings.warn(
+                                    'cannot parse value: {v}, as type: {t}, '
+                                    'for field: {f}, in form: {o}, '
+                                    'version: {r} (line {n})'.format(
+                                        v=value,
+                                        t=prop['type'],
+                                        f=field,
+                                        o=form,
+                                        r=version,
+                                        n=line_num + 1,
+                                    ),
+                                    FecParserTypeWarning,
+                                )
+                                return None
     return value
 
 

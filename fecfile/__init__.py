@@ -2,6 +2,9 @@ from . import fecparser
 import requests
 
 
+FecParserMissingMappingError = fecparser.FecParserMissingMappingError
+
+
 def loads(input):
     return fecparser.loads(input)
 
@@ -14,6 +17,8 @@ def from_http(file_number):
             n=file_number
         )
         r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+    if r.status_code == 404:
+        return None
     return fecparser.loads(r.text)
 
 

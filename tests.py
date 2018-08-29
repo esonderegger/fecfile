@@ -203,5 +203,22 @@ class V1Filing(unittest.TestCase):
         self.assertEqual(sched_b[0]['expenditure_amount'], 286.61)
 
 
+# class AllFormsHaveMappings(unittest.TestCase):
+#     def test_request(self):
+#         missing_mappings = {}
+#         for i in range(1, 5000):  # 1259000
+#             try:
+#                 print(i)
+#                 fecfile.from_http(i)
+#             except fecfile.FecParserMissingMappingError as ex:
+#                 if str(ex) in missing_mappings:
+#                     missing_mappings[str(ex)] += 1
+#                 else:
+#                     missing_mappings[str(ex)] = 1
+#         for m in missing_mappings.keys():
+#             print('{a}: {b}'.format(a=m, b=missing_mappings[m]))
+#         self.assertEqual(len(missing_mappings.keys()), 0)
+
+
 if __name__ == '__main__':
     unittest.main()

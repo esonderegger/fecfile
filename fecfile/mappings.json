@@ -1598,7 +1598,7 @@
       "col_b_aggregate_personal_funds_general",
       "col_b_gross_receipts_minus_personal_funds_general"
     ],
-    "^3.0": [
+    "^3.0|^2|^1": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -6591,7 +6591,7 @@
       "lender_candidate_office",
       "lender_candidate_state",
       "lender_candidate_district",
-      "",
+      "amended_cd",
       "transaction_id_number",
       "receipt_line_number"
     ],
@@ -6620,11 +6620,11 @@
       "lender_candidate_office",
       "lender_candidate_state",
       "lender_candidate_district",
-      "",
+      "amended_cd",
       "transaction_id_number",
       "receipt_line_number"
     ],
-    "^5.0|^3": [
+    "^5.0|^3|^2|^1": [
       "form_type",
       "filer_committee_id_number",
       "entity_type",
@@ -6649,7 +6649,7 @@
       "lender_candidate_office",
       "lender_candidate_state",
       "lender_candidate_district",
-      "",
+      "amended_cd",
       "transaction_id_number"
     ]
   },
@@ -6702,7 +6702,7 @@
       "authorized_prefix",
       "authorized_suffix",
       "authorized_title",
-      "date_signed"
+      "authorized_date"
     ],
     "^5.3": [
       "form_type",
@@ -6744,7 +6744,7 @@
       "date_signed",
       "authorized_name",
       "authorized_title",
-      "date_signed"
+      "authorized_date"
     ],
     "^5.2|5.1|5.0": [
       "form_type",
@@ -6786,7 +6786,7 @@
       "date_signed",
       "authorized_name",
       "authorized_title",
-      "date_signed"
+      "authorized_date"
     ],
     "^3": [
       "form_type",
@@ -6828,7 +6828,48 @@
       "date_signed",
       "authorized_name",
       "authorized_title",
-      "date_signed"
+      "authorized_date"
+    ],
+    "^2": [
+      "form_type",
+      "filer_committee_id_number",
+      "back_reference_tran_id_number",
+      "entity_type",
+      "lender_organization_name",
+      "lender_street_1",
+      "lender_street_2",
+      "lender_city",
+      "lender_state",
+      "lender_zip_code",
+      "loan_amount",
+      "loan_interest_rate",
+      "loan_incurred_date",
+      "loan_due_date",
+      "loan_restructured",
+      "loan_inccured_date_original",
+      "credit_amount_this_draw",
+      "total_balance",
+      "others_liable",
+      "collateral",
+      "description",
+      "collateral_value_amount",
+      "perfected_interest",
+      "future_income",
+      "description",
+      "estimated_value",
+      "established_date",
+      "account_location_name",
+      "street_1",
+      "street_2",
+      "city",
+      "state",
+      "zip_code",
+      "deposit_acct_auth_date_presidential",
+      "f_basis_of_loan_description",
+      "treasurer_name",
+      "date_signed",
+      "authorized_name",
+      "authorized_title"
     ]
   },
   "^sc2": {
@@ -6879,7 +6920,7 @@
       "guarantor_occupation",
       "guaranteed_amount"
     ],
-    "^3": [
+    "^3|^2": [
       "form_type",
       "filer_committee_id_number",
       "back_reference_tran_id_number",
@@ -6965,10 +7006,10 @@
       "conduit_city",
       "conduit_state",
       "conduit_zip_code",
-      "",
+      "amended_cd",
       "transaction_id_number"
     ],
-    "^5.2|5.1|5.0|^3": [
+    "^5.2|5.1|5.0|^3|^2": [
       "form_type",
       "filer_committee_id_number",
       "entity_type",
@@ -6995,8 +7036,24 @@
       "conduit_city",
       "conduit_state",
       "conduit_zip_code",
-      "",
+      "amended_cd",
       "transaction_id_number"
+    ],
+    "^1": [
+      "form_type",
+      "filer_committee_id_number",
+      "creditor_name",
+      "creditor_street_1",
+      "creditor_street_2",
+      "creditor_city",
+      "creditor_state",
+      "creditor_zip_code",
+      "purpose_of_debt_or_obligation",
+      "beginning_balance_this_period",
+      "incurred_amount_this_period",
+      "payment_amount_this_period",
+      "balance_at_close_this_period",
+      "amended_cd"
     ]
   },
   "^se": {
@@ -7275,6 +7332,72 @@
       "memo_text_description",
       "back_reference_tran_id_number",
       "back_reference_sched_name"
+    ],
+    "^2": [
+      "form_type",
+      "filer_committee_id_number",
+      "entity_type",
+      "payee_name",
+      "payee_street_1",
+      "payee_street_2",
+      "payee_city",
+      "payee_state",
+      "payee_zip_code",
+      "expenditure_purpose_descrip",
+      "dissemination_date",
+      "expenditure_amount",
+      "support_oppose_code",
+      "candidate_id_number",
+      "candidate_name",
+      "candidate_office",
+      "candidate_state",
+      "candidate_district",
+      "payee_cmtte_fec_id_number",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "conduit_name",
+      "conduit_street_1",
+      "conduit_street_2",
+      "conduit_city",
+      "conduit_state",
+      "conduit_zip_code",
+      "ind_name_as_signed",
+      "date_signed",
+      "date_notarized",
+      "date_notary_commission_expires",
+      "ind_name_notary",
+      "amended_cd",
+      "transaction_id_number",
+      "back_reference_tran_id_number",
+      "back_reference_sched_name"
+    ],
+    "^1": [
+      "form_type",
+      "filer_committee_id_number",
+      "payee_name",
+      "payee_street_1",
+      "payee_street_2",
+      "payee_city",
+      "payee_state",
+      "payee_zip_code",
+      "expenditure_purpose_descrip",
+      "dissemination_date",
+      "expenditure_amount",
+      "candidate_id_number",
+      "candidate_name",
+      "candidate_office",
+      "candidate_state",
+      "candidate_district",
+      "support_oppose_code",
+      "ind_name_as_signed",
+      "date_signed",
+      "date_notarized",
+      "date_notary_commission_expires",
+      "ind_name_notary",
+      "amended_cd"
     ]
   },
   "^sf": {
