@@ -4887,7 +4887,7 @@
       "senate_only_election_year",
       "non_presidential_non_senate_election_year"
     ],
-    "^3.0": [
+    "^3.0|^2|^1": [
       "ballot_local_candidates",
       "filer_committee_id_number",
       "national_party_committee_percentage",
@@ -4910,12 +4910,12 @@
       "ballot_other_statewide",
       "ballot_state_senate",
       "ballot_state_representative",
-      "",
+      "ballot_local_candidates",
       "extra_nonfederal_point",
       "subtotal",
       "total_points",
       "flat_minimum_federal_percentage",
-      "",
+      "amended_cd",
       "transaction_id"
     ]
   },
@@ -4944,7 +4944,7 @@
       "",
       "transaction_id"
     ],
-    "^5.0|^3.0": [
+    "^5.0|^3.0|^2|^1": [
       "form_type",
       "filer_committee_id_number",
       "activity_event_name",
@@ -4954,7 +4954,7 @@
       "ratio_code",
       "federal_percentage",
       "nonfederal_percentage",
-      "",
+      "amended_cd",
       "transaction_id"
     ]
   },
