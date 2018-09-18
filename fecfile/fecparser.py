@@ -44,7 +44,7 @@ def loads(input):
     out['header'], version, header_length = parse_header(lines)
     for i in range(header_length, len(lines)):
         line = lines[i]
-        parsed = parseline(line, version, i)
+        parsed = parse_line(line, version, i)
         if i < header_length + 1:
             out['filing'] = parsed
         elif parsed:
@@ -97,13 +97,13 @@ def parse_header(lines):
         return header, header['fec_ver_#'], header_size + 1
     fields = fields_from_line(lines[0])
     if fields[1] == 'FEC':
-        parsed = parseline(lines[0], fields[2], 0)
+        parsed = parse_line(lines[0], fields[2], 0)
         return parsed, fields[2], 1
-    parsed = parseline(lines[0], fields[1], 0)
+    parsed = parse_line(lines[0], fields[1], 0)
     return parsed, fields[1], 1
 
 
-def parseline(line, version, line_num):
+def parse_line(line, version, line_num=None):
     fields = fields_from_line(line)
     if len(fields) < 2:
         return None
@@ -165,7 +165,7 @@ def getTyped(form, version, field, value, line_num):
                                         f=field,
                                         o=form,
                                         r=version,
-                                        n=line_num + 1,
+                                        n='unknown' if line_num is None else line_num + 1,
                                     ),
                                     FecParserTypeWarning,
                                 )

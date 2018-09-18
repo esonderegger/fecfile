@@ -9,6 +9,10 @@ def loads(input):
     return fecparser.loads(input)
 
 
+def parse_line(line, version, line_num=None):
+    return fecparser.parse_line(line, version, line_num)
+
+
 def from_http(file_number):
     url = 'http://docquery.fec.gov/dcdev/posted/{n}.fec'.format(n=file_number)
     r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
