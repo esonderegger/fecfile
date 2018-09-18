@@ -9,6 +9,13 @@ def loads(input):
     return fecparser.loads(input)
 
 
+def parse_header(hdr):
+    if type(hdr) is list:
+        return fecparser.parse_header(hdr)
+    else:
+        return fecparser.parse_header([hdr])
+
+
 def parse_line(line, version, line_num=None):
     return fecparser.parse_line(line, version, line_num)
 
