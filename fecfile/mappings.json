@@ -31,7 +31,7 @@
     ]
   },
   "^f1[an]": {
-    "^8.2|8.1|8.0|7.0|6.4": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4": [
       "form_type",
       "filer_committee_id_number",
       "change_of_committee_name",
@@ -416,7 +416,7 @@
       "date_signed",
       "beginning_image_number"
     ],
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -507,7 +507,7 @@
       "memo_text_description",
       "image_number"
     ],
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -595,7 +595,7 @@
       "memo_text_description",
       "image_number"
     ],
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -642,7 +642,7 @@
     ]
   },
   "(^f1m[a|n])": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -766,7 +766,7 @@
     ]
   },
   "^f1s": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2": [
       "form_type",
       "filer_committee_id_number",
       "joint_fund_participant_committee_name",
@@ -839,7 +839,7 @@
     "^3.0": []
   },
   "(^f2$)|(^f2[^4])": {
-    "^8.2": [
+    "^8.3|8.2": [
       "form_type",
       "candidate_id_number",
       "candidate_last_name",
@@ -1037,7 +1037,7 @@
     ]
   },
   "(^f24$)|(^f24[an])": {
-    "^8.2|8.1|8.0": [
+    "^8.3|8.2|8.1|8.0": [
       "form_type",
       "filer_committee_id_number",
       "report_type",
@@ -1291,7 +1291,7 @@
       "col_b_total_disbursements",
       "begin_image_number"
     ],
-    "^8.2|8.1|8.0|7.0|6.4": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -1695,7 +1695,7 @@
     ]
   },
   "^f3l[a|n]": {
-    "^8.2|8.1|8.0|7.0|6.4": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -1726,7 +1726,7 @@
     ]
   },
   "(^f3p$)|(^f3p[^s|3])": {
-    "^8.2|8.1|8.0|7.0": [
+    "^8.3|8.2|8.1|8.0|7.0": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -2540,7 +2540,7 @@
     ]
   },
   "^f3p31": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -2635,7 +2635,7 @@
     ]
   },
   "^f3ps": {
-    "^8.2|8.1|8.0|7.0": [
+    "^8.3|8.2|8.1|8.0|7.0": [
       "form_type",
       "filer_committee_id_number",
       "date_general_election",
@@ -2915,7 +2915,7 @@
     ]
   },
   "^f3s": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "date_general_election",
@@ -2991,7 +2991,7 @@
     ]
   },
   "(^f3x$)|(^f3x[ant])": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -3388,7 +3388,7 @@
     ]
   },
   "^f3z1": {
-    "^8.2": [
+    "^8.3|8.2": [
       "form_type",
       "filer_committee_id_number",
       "principal_committee_name",
@@ -3428,7 +3428,7 @@
     ]
   },
   "^f3z2": {
-    "^8.2": [
+    "^8.3|8.2": [
       "form_type",
       "filer_committee_id_number",
       "principal_committee_name",
@@ -3466,7 +3466,7 @@
     ]
   },
   "^f4[na]": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -3635,7 +3635,7 @@
     ]
   },
   "^f5[na]": {
-    "^8.2|8.1": [
+    "^8.3|8.2|8.1": [
       "form_type",
       "filer_committee_id_number",
       "entity_type",
@@ -3784,7 +3784,7 @@
     ]
   },
   "^f56": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -3837,7 +3837,7 @@
     ]
   },
   "^f57": {
-    "^8.2|8.1": [
+    "^8.3|8.2|8.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -4017,7 +4017,7 @@
     ]
   },
   "(^f6$)|(^f6[an])": {
-    "^8.2|8.1|8.0": [
+    "^8.3|8.2|8.1|8.0": [
       "form_type",
       "filer_committee_id_number",
       "original_amendment_date",
@@ -4086,7 +4086,7 @@
     ]
   },
   "^f65": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -4139,7 +4139,7 @@
     ]
   },
   "^f7[na]": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "organization_name",
@@ -4185,7 +4185,7 @@
     ]
   },
   "^f76": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -4227,6 +4227,53 @@
     ]
   },
   "^f9": {
+    "^8.3": [
+      "form_type",
+      "filer_committee_id_number",
+      "entity_type",
+      "organization_name",
+      "individual_last_name",
+      "individual_first_name",
+      "individual_middle_name",
+      "individual_prefix",
+      "individual_suffix",
+      "change_of_address",
+      "street_1",
+      "street_2",
+      "city",
+      "state",
+      "zip_code",
+      "individual_employer",
+      "individual_occupation",
+      "original_amendment_date",
+      "coverage_from_date",
+      "coverage_through_date",
+      "date_public_distribution",
+      "communication_title",
+      "filer_code",
+      "filer_code_description",
+      "segregated_bank_account",
+      "custodian_last_name",
+      "custodian_first_name",
+      "custodian_middle_name",
+      "custodian_prefix",
+      "custodian_suffix",
+      "custodian_street_1",
+      "custodian_street_2",
+      "custodian_city",
+      "custodian_state",
+      "custodian_zip_code",
+      "custodian_employer",
+      "custodian_occupation",
+      "total_donations",
+      "total_disbursements",
+      "person_completing_last_name",
+      "person_completing_first_name",
+      "person_completing_middle_name",
+      "person_completing_prefix",
+      "person_completing_suffix",
+      "date_signed"
+    ],
     "^8.2|8.1|8.0|7.0|6.4|6.3|6.2": [
       "form_type",
       "filer_committee_id_number",
@@ -4351,7 +4398,7 @@
     ]
   },
   "^f91": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -4398,7 +4445,7 @@
     ]
   },
   "^f92": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -4543,7 +4590,7 @@
     ]
   },
   "^f93": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -4700,7 +4747,7 @@
     ]
   },
   "^f94": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -4735,7 +4782,7 @@
     ]
   },
   "^f99": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -4782,7 +4829,7 @@
     ]
   },
   "^h1": {
-    "^8.2": [
+    "^8.3|8.2": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -4920,7 +4967,7 @@
     ]
   },
   "^h2": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -4959,7 +5006,7 @@
     ]
   },
   "^h3": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -4986,7 +5033,7 @@
     ]
   },
   "^h4": {
-    "^8.2|8.1|8.0": [
+    "^8.3|8.2|8.1|8.0": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -5188,7 +5235,7 @@
     ]
   },
   "^h5": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -5215,7 +5262,7 @@
     ]
   },
   "^h6": {
-    "^8.2|8.1|8.0": [
+    "^8.3|8.2|8.1|8.0": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -5378,7 +5425,7 @@
       "memo_text_description",
       "image_number"
     ],
-    "^8.2|8.1|8.0": [
+    "^8.3|8.2|8.1|8.0": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -5823,7 +5870,7 @@
     ]
   },
   "^sa3l": {
-    "^8.2|8.1|8.0": [
+    "^8.3|8.2|8.1|8.0": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id",
@@ -6022,7 +6069,7 @@
       "memo_text_description",
       "image_number"
     ],
-    "^8.2|8.1|8.0": [
+    "^8.3|8.2|8.1|8.0": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -6489,7 +6536,7 @@
       "secured",
       "image_number"
     ],
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -6654,7 +6701,7 @@
     ]
   },
   "^sc1": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -6873,7 +6920,7 @@
     ]
   },
   "^sc2": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -6957,7 +7004,7 @@
       "balance_at_close_this_period",
       "image_number"
     ],
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -7057,7 +7104,7 @@
     ]
   },
   "^se": {
-    "^8.2|8.1": [
+    "^8.3|8.2|8.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -7401,7 +7448,7 @@
     ]
   },
   "^sf": {
-    "^8.2|8.1|8.0": [
+    "^8.3|8.2|8.1|8.0": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -7679,7 +7726,7 @@
     ]
   },
   "^sl": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
       "transaction_id_number",
@@ -7767,7 +7814,7 @@
     ]
   },
   "^text": {
-    "^8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
+    "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "rec_type",
       "filer_committee_id_number",
       "transaction_id_number",
