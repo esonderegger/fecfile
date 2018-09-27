@@ -1707,7 +1707,7 @@
       "col_b_total_refunds",
       "col_b_other_disbursements",
       "col_b_total_disbursements",
-      "begin_image_number",
+      "beginning_image_number",
       "end_image_number",
       "receipt_date"
     ],
@@ -1804,7 +1804,7 @@
       "col_b_total_refunds",
       "col_b_other_disbursements",
       "col_b_total_disbursements",
-      "begin_image_number"
+      "beginning_image_number"
     ],
     "^8.3|8.2|8.1|8.0|7.0|6.4": [
       "form_type",
@@ -4551,7 +4551,7 @@
       "candidate_state",
       "candidate_district",
       "date_signed",
-      "begin_image_number",
+      "beginning_image_number",
       "end_image_number",
       "receipt_date"
     ],
@@ -4574,7 +4574,7 @@
       "candidate_state",
       "candidate_district",
       "date_signed",
-      "begin_image_number"
+      "beginning_image_number"
     ],
     "^P1|^P2": [
       "form_type",
@@ -4594,7 +4594,7 @@
       "candidate_state",
       "candidate_district",
       "date_signed",
-      "begin_image_number"
+      "beginning_image_number"
     ],
     "^8.3|8.2|8.1|8.0": [
       "form_type",
