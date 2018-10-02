@@ -190,6 +190,69 @@ Almost too much to list:
 
 ## Changes
 
-### 0.4.0
+### 0.4.0 (October 2, 2018)
 - Updated documentation
 - add paper versions for schedule F
+
+### 0.3.9 (October 1, 2018)
+- add paper versions for H1, H2, H3, and H4
+
+### 0.3.8 (September 28, 2018)
+- add paper versions for the F1S
+
+### 0.3.7 (September 27, 2018)
+- add paper versions of F1M
+- add paper versions for F3X
+- add F3P paper filing mappings
+
+### 0.3.6 (September 27, 2018)
+- add F6 paper mappings and fix missing commas
+
+### 0.3.5 (September 26)
+- add all paper versions of form F1
+
+### 0.3.4 (September 18, 2018)
+- expose parse_header and parse_line to consumers of this library
+
+### 0.3.3 (September 18, 2018)
+- add version 8.3 to mappings
+
+### 0.3.2 (August 29, 2018)
+- versions 1 and 2 of schedule H1 and H2
+
+### 0.3.1 (August 29, 2018)
+- added more mappings
+- add a method to determine which mappings are missing
+
+### 0.3.0 (August 27, 2018)
+- Rework warnings and errors for cases where mappings are missing
+- add mappings
+
+### 0.2.3 (August 24, 2018)
+- fix for filings that use both quotes and the field separator
+
+### 0.2.2 (August 23, 2018)
+- add support for F13, F132, and F133
+
+### 0.2.1 (August 21, 2018)
+- Fix regression that broke paper filings
+
+### 0.2.0 (August 2, 2018)
+- Add parsing for versions 1 and 2 of the .fec format
+
+### 0.1.9 (July 18, 2018)
+- add parsing for senate paper filings
+
+### 0.1.8 (June 26, 2018)
+- interest rate should never have been a float field
+
+### 0.1.7 (June 26, 2018)
+- handle n/a in number fields
+
+### 0.1.6 (June 25, 2018)
+- more types
+- update documentation
+- handle percent signs in interest rates
+
+### 0.1.5 (June 21, 2018)
+- Initial published version
