@@ -45,8 +45,21 @@ def loads(input):
     lines = input.split('\n')
     out = {'itemizations': {}, 'text': [], 'header': {}, 'filing': {}}
     out['header'], version, header_length = parse_header(lines)
+    text_section = False
     for i in range(header_length, len(lines)):
         line = lines[i]
+        if line.strip() == '[BEGINTEXT]':
+            text_section = True
+            continue
+        if line.strip() == '[ENDTEXT]':
+            text_section = False
+            continue
+        if text_section:
+            if 'F99_text' in out:
+                out['F99_text'] += '\n' + line
+            else:
+                out['F99_text'] = line
+            continue
         parsed = parse_line(line, version, i)
         if i < header_length + 1:
             out['filing'] = parsed
