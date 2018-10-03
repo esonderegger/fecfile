@@ -37,6 +37,9 @@ with open(types_file) as data_file:
 eastern = timezone('US/Eastern')
 
 
+comma_versions = ['1', '2', '3', '5']
+
+
 def loads(input):
     version = None
     lines = input.split('\n')
@@ -61,8 +64,8 @@ def loads(input):
     return out
 
 
-def fields_from_line(line):
-    if chr(0x1c) in line:
+def fields_from_line(line, use_ascii_28=False):
+    if (chr(0x1c) in line) or use_ascii_28:
         fields = line.split(chr(0x1c))
     else:
         reader = csv.reader([line])
@@ -104,7 +107,10 @@ def parse_header(lines):
 
 
 def parse_line(line, version, line_num=None):
-    fields = fields_from_line(line)
+    ascii_separator = True
+    if version is None or version[0] in comma_versions:
+        ascii_separator = False
+    fields = fields_from_line(line, use_ascii_28=ascii_separator)
     if len(fields) < 2:
         return None
     for mapping in mappings.keys():
