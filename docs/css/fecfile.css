@@ -9,7 +9,7 @@ body {
 h1, h2, h3 {
   line-height: 1.2;
   max-width: 40rem;
-  margin: .5em auto;
+  margin: 1.25em auto 0;
 }
 p, ul {
   max-width: 40rem;

@@ -4,7 +4,7 @@ title: fecfile&#58; a python parser for the .fec file format
 ---
 
 # fecfile
-a python parser for the .fec file format [(github)](https://github.com/esonderegger/fecfile) [(PyPi)](https://pypi.org/project/fecfile/)
+a python parser for the .fec file format ([github](https://github.com/esonderegger/fecfile)) ([PyPi](https://pypi.org/project/fecfile/))
 
 This is a library for converting campaign finance filings stored in the .fec format into native python objects. It maps the comma/ASCII 28 delimited fields to canonical names based on the version the filing uses and then converts the values that are dates and numbers into the appropriate `int`, `float`, or `datetime` objects.
 
