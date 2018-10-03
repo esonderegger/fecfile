@@ -5,6 +5,7 @@ import os
 import json
 import shutil
 import zipfile
+# import random
 
 
 class CandidateTest(unittest.TestCase):
@@ -206,11 +207,13 @@ class V1Filing(unittest.TestCase):
 # class AllFormsHaveMappings(unittest.TestCase):
 #     def test_request(self):
 #         missing_mappings = {}
-#         for i in range(1, 5000):  # 1259000
+#         whole_range = list(range(0, 1263000))
+#         random_sample = random.sample(whole_range, 200)
+#         for i in random_sample:
 #             try:
-#                 print(i)
 #                 fecfile.from_http(i)
 #             except fecfile.FecParserMissingMappingError as ex:
+#                 print(str(i) + ': ' + str(ex))
 #                 if str(ex) in missing_mappings:
 #                     missing_mappings[str(ex)] += 1
 #                 else:
