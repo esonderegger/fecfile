@@ -8174,6 +8174,24 @@
     ]
   },
   "^sc2": {
+    "^(P1|P2|P3)": [
+      "form_type",
+      "filer_committee_id_number",
+      "guarantor_last_name",
+      "guarantor_first_name",
+      "guarantor_middle_name",
+      "guarantor_prefix",
+      "guarantor_suffix",
+      "guarantor_street_1",
+      "guarantor_street_2",
+      "guarantor_city",
+      "guarantor_state",
+      "guarantor_zip_code",
+      "guarantor_employer",
+      "guarantor_occupation",
+      "guaranteed_amount",
+      "image_number"
+    ],
     "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
