@@ -207,19 +207,20 @@ class V1Filing(unittest.TestCase):
 # class AllFormsHaveMappings(unittest.TestCase):
 #     def test_request(self):
 #         missing_mappings = {}
-#         whole_range = list(range(0, 1263000))
-#         random_sample = random.sample(whole_range, 200)
+#         whole_range = list(range(0, 1263800))
+#         random_sample = random.sample(whole_range, 100)
 #         for i in random_sample:
 #             try:
 #                 fecfile.from_http(i)
 #             except fecfile.FecParserMissingMappingError as ex:
 #                 print(str(i) + ': ' + str(ex))
-#                 if str(ex) in missing_mappings:
-#                     missing_mappings[str(ex)] += 1
+#                 relevant_str = str(ex)[13:].split(' - ')[0]
+#                 if relevant_str in missing_mappings:
+#                     missing_mappings[relevant_str] += 1
 #                 else:
-#                     missing_mappings[str(ex)] = 1
-#         for m in missing_mappings.keys():
-#             print('{a}: {b}'.format(a=m, b=missing_mappings[m]))
+#                     missing_mappings[relevant_str] = 1
+#         for m in sorted(missing_mappings.keys()):
+#             print('{a} ({b})'.format(a=m, b=missing_mappings[m]))
 #         self.assertEqual(len(missing_mappings.keys()), 0)
 
 
