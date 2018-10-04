@@ -195,6 +195,18 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.1 (October 4, 2018)
+- add mappings for versions P1 and P2 of Schedule B
+- add mappings for versions P1 and P2 of Schedule A
+- add mappings for versions P1 and P2 of F3
+- add F99_text field to returned object for form 99 filings
+- add hdr mappings for paper versions 1 and 2
+- do not split on commas when we know the form is using ascii 28
+- add mappings for paper versions of F65
+- add mappings for paper versions of schedule C1
+- add mappings for paper versions of schedule C2
+- add mappings for paper versions of schedule E
+
 ### 0.4.0
 - Updated documentation
 - add paper versions for schedule F
