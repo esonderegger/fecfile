@@ -5,7 +5,8 @@ import os
 import json
 import shutil
 import zipfile
-# import random
+import random
+import sys
 
 
 class CandidateTest(unittest.TestCase):
@@ -204,25 +205,49 @@ class V1Filing(unittest.TestCase):
         self.assertEqual(sched_b[0]['expenditure_amount'], 286.61)
 
 
-# class AllFormsHaveMappings(unittest.TestCase):
-#     def test_request(self):
-#         missing_mappings = {}
-#         whole_range = list(range(0, 1263800))
-#         random_sample = random.sample(whole_range, 100)
-#         for i in random_sample:
-#             try:
-#                 fecfile.from_http(i)
-#             except fecfile.FecParserMissingMappingError as ex:
-#                 print(str(i) + ': ' + str(ex))
-#                 relevant_str = str(ex)[13:].split(' - ')[0]
-#                 if relevant_str in missing_mappings:
-#                     missing_mappings[relevant_str] += 1
-#                 else:
-#                     missing_mappings[relevant_str] = 1
-#         for m in sorted(missing_mappings.keys()):
-#             print('{a} ({b})'.format(a=m, b=missing_mappings[m]))
-#         self.assertEqual(len(missing_mappings.keys()), 0)
+class AllFormsHaveMappings(unittest.TestCase):
+    def test_request(self):
+        missing_mappings = {}
+        whole_range = list(range(0, 1263800))
+        random_sample = random.sample(whole_range, 100)
+        for i in random_sample:
+            try:
+                fecfile.from_http(i)
+            except fecfile.FecParserMissingMappingError as ex:
+                print(str(i) + ': ' + str(ex))
+                relevant_str = str(ex)[13:].split(' - ')[0]
+                if relevant_str in missing_mappings:
+                    missing_mappings[relevant_str] += 1
+                else:
+                    missing_mappings[relevant_str] = 1
+        for m in sorted(missing_mappings.keys()):
+            print('{a} ({b})'.format(a=m, b=missing_mappings[m]))
+        self.assertEqual(len(missing_mappings.keys()), 0)
 
 
 if __name__ == '__main__':
-    unittest.main()
+    regular_tests = unittest.TestSuite([
+        CandidateTest('test_simple'),
+        PacViaHttpRequest('test_request'),
+        TextLastRow('test_request'),
+        IndependentExpendituresReport('test_request'),
+        HasScheduleC('test_request'),
+        HasScheduleD('test_request'),
+        HandleF1FromWebForms('test_request'),
+        HandlePercentInNumber('test_request'),
+        HandleNANumber('test_request'),
+        ConvertZipFileToJSON('test_convert'),
+        SenatePaperFiling('test_request'),
+        InauguralCommitteeFiling('test_request'),
+        UnnecessaryQuotes('test_request'),
+        V5Filing('test_request'),
+        V3Filing('test_request'),
+        CommaInCSVFiling('test_request'),
+        V2Filing('test_request'),
+        V1Filing('test_request'),
+    ])
+    mappings_test = unittest.TestSuite([AllFormsHaveMappings('test_request')])
+    if len(sys.argv) > 1 and sys.argv[1] == 'mappings':
+        unittest.TextTestRunner().run(mappings_test)
+    else:
+        unittest.TextTestRunner().run(regular_tests)
