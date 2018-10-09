@@ -48,7 +48,7 @@ def loads(input):
     text_section = False
     for i in range(header_length, len(lines)):
         line = lines[i]
-        stripped_line = line.strip()
+        stripped_line = line.strip().upper()
         if stripped_line == '[BEGINTEXT]' or stripped_line == '[BEGIN TEXT]':
             text_section = True
             continue
