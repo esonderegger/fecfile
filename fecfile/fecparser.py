@@ -48,10 +48,11 @@ def loads(input):
     text_section = False
     for i in range(header_length, len(lines)):
         line = lines[i]
-        if line.strip() == '[BEGINTEXT]':
+        stripped_line = line.strip()
+        if stripped_line == '[BEGINTEXT]' or stripped_line == '[BEGIN TEXT]':
             text_section = True
             continue
-        if line.strip() == '[ENDTEXT]':
+        if stripped_line == '[ENDTEXT]' or stripped_line == '[END TEXT]':
             text_section = False
             continue
         if text_section:
