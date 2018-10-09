@@ -195,6 +195,12 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.2 (October 9, 2018)
+- add mappings for paper versions of F57
+- add mappings for paper versions of F5
+- add mappings for paper versions of F3L
+- add mappings for paper versions of F3S
+
 ### 0.4.1 (October 4, 2018)
 - add mappings for versions P1 and P2 of Schedule B
 - add mappings for versions P1 and P2 of Schedule A
