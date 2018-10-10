@@ -6012,6 +6012,26 @@
     ]
   },
   "^f76": {
+    "^P(3|2|1)": [
+      "form_type",
+      "filer_committee_id_number",
+      "communication_type",
+      "communication_type_description",
+      "communication_class",
+      "communication_date",
+      "support_oppose_code",
+      "candidate_last_name",
+      "candidate_first_name",
+      "candidate_middle_name",
+      "candidate_prefix",
+      "candidate_suffix",
+      "candidate_office",
+      "candidate_state",
+      "candidate_district",
+      "election_code",
+      "communication_cost",
+      "image_number"
+    ],
     "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
