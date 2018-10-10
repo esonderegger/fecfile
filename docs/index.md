@@ -195,6 +195,12 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.3 (October 10, 2018)
+- add mappings for paper versions of F76
+- add mappings for paper versions of F9
+- add mappings for paper versions of F2
+- add mappings for paper versions of F7
+
 ### 0.4.2 (October 9, 2018)
 - add mappings for paper versions of F57
 - add mappings for paper versions of F5
