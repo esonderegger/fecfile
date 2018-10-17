@@ -195,6 +195,9 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.4 (October 17, 2018)
+- fixed out of order mappings for paper versions of F3
+
 ### 0.4.3 (October 10, 2018)
 - add mappings for paper versions of F76
 - add mappings for paper versions of F9
