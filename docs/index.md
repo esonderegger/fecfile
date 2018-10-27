@@ -195,6 +195,9 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.5 (October 27, 2018)
+- add mappings for paper versions of F3Z
+
 ### 0.4.4 (October 17, 2018)
 - fixed out of order mappings for paper versions of F3
 

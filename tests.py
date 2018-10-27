@@ -123,6 +123,18 @@ class SenatePaperFiling(unittest.TestCase):
         self.assertEqual(first_a['contribution_amount'], 25.0)
 
 
+class CanParsePaperF3Z(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1160224)
+        filing = parsed['filing']
+        self.assertEqual(
+            filing['committee_name'],
+            'BOBBY MAHENDRA FOR SENATE'
+            )
+        f3z = parsed['itemizations']['F3Z']
+        self.assertEqual(f3z[0]['col_a_net_contributions'], 459.75)
+
+
 class InauguralCommitteeFiling(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(1160672)
@@ -238,6 +250,7 @@ if __name__ == '__main__':
         HandleNANumber('test_request'),
         ConvertZipFileToJSON('test_convert'),
         SenatePaperFiling('test_request'),
+        CanParsePaperF3Z('test_request'),
         InauguralCommitteeFiling('test_request'),
         UnnecessaryQuotes('test_request'),
         V5Filing('test_request'),
