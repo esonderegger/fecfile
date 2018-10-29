@@ -5518,6 +5518,27 @@
     ]
   },
   "^f56": {
+    "^(P3|P2|P1)": [
+      "form_type",
+      "filer_committee_id_number",
+      "contributor_organization_name",
+      "contributor_last_name",
+      "contributor_first_name",
+      "contributor_middle_name",
+      "contributor_prefix",
+      "contributor_suffix",
+      "contributor_street_1",
+      "contributor_street_2",
+      "contributor_city",
+      "contributor_state",
+      "contributor_zip_code",
+      "contributor_fec_id",
+      "contribution_date",
+      "contribution_amount",
+      "contributor_employer",
+      "contributor_occupation",
+      "image_number"
+    ],
     "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2": [
       "form_type",
       "filer_committee_id_number",
