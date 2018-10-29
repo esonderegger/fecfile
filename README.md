@@ -190,6 +190,18 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.6 (October 29, 2018)
+- add mappings for paper versions of F4
+- add mappings for paper versions of F56
+- add mappings for paper versions of F91
+- add mappings for paper versions of F92
+- add mappings for paper versions of F93
+- add mappings for paper versions of F94
+- add mappings for paper versions of F99
+- add mappings for paper versions of H5 and H6
+- add mappings for paper versions of Schedule L
+- add mapping for version P3.4 for F3Z1 and F3Z2
+
 ### 0.4.5 (October 27, 2018)
 - add mappings for paper versions of F3Z
 
