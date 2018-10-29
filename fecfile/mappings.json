@@ -6843,6 +6843,13 @@
     ]
   },
   "^f99": {
+    "^(P3.4|P3.3|P3.2)": [
+      "form_type",
+      "filer_committee_id_number",
+      "beginning_image_number",
+      "end_image_number",
+      "receipt_date"
+    ],
     "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
