@@ -4954,7 +4954,7 @@
     ]
   },
   "^f3z1": {
-    "^8.3|8.2": [
+    "^(P3.4|8.3|8.2)": [
       "form_type",
       "filer_committee_id_number",
       "principal_committee_name",
@@ -4994,7 +4994,7 @@
     ]
   },
   "^f3z2": {
-    "^8.3|8.2": [
+    "^(P3.4|8.3|8.2)": [
       "form_type",
       "filer_committee_id_number",
       "principal_committee_name",
