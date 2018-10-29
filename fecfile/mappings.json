@@ -6459,6 +6459,23 @@
     ]
   },
   "^f91": {
+    "^(P3|P2|P1)": [
+      "form_type",
+      "filer_committee_id_number",
+      "controller_last_name",
+      "controller_first_name",
+      "controller_middle_name",
+      "controller_prefix",
+      "controller_suffix",
+      "controller_street_1",
+      "controller_street_2",
+      "controller_city",
+      "controller_state",
+      "controller_zip_code",
+      "controller_employer",
+      "controller_occupation",
+      "image_number"
+    ],
     "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
