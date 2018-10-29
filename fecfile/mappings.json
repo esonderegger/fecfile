@@ -6808,6 +6808,22 @@
     ]
   },
   "^f94": {
+    "^(P3|P2|P1)": [
+      "form_type",
+      "filer_committee_id_number",
+      "candidate_last_name",
+      "candidate_first_name",
+      "candidate_middle_name",
+      "candidate_prefix",
+      "candidate_suffix",
+      "candidate_office",
+      "candidate_state",
+      "candidate_district",
+      "election_code",
+      "election_other_description",
+      "back_reference_tran_id_number",
+      "image_number"
+    ],
     "^8.3|8.2|8.1|8.0|7.0|6.4|6.3|6.2|6.1": [
       "form_type",
       "filer_committee_id_number",
