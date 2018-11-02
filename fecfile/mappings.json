@@ -6343,7 +6343,7 @@
       "transaction_id"
     ]
   },
-  "^f9": {
+  "(^f9$)|(^f9[an])": {
     "^P(3.4|3.3|3.2)": [
       "form_type",
       "filer_committee_id_number",

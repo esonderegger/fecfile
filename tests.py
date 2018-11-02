@@ -145,6 +145,20 @@ class InauguralCommitteeFiling(unittest.TestCase):
         self.assertEqual(first_itemization['donation_amount'], 100.0)
 
 
+class ElectioneeringFiling(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1226989)
+        filing = parsed['filing']
+        self.assertEqual(filing['organization_name'], '45Committee, Inc.')
+        self.assertEqual(filing['total_disbursements'], 56678.84)
+        first_91 = parsed['itemizations']['F91'][0]
+        self.assertEqual(first_91['controller_city'], 'Herndon')
+        first_93 = parsed['itemizations']['F93'][0]
+        self.assertEqual(first_93['expenditure_amount'], 48017.00)
+        first_94 = parsed['itemizations']['F94'][0]
+        self.assertEqual(first_94['candidate_last_name'], 'Manchin')
+
+
 class UnnecessaryQuotes(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(1157513)
@@ -220,7 +234,7 @@ class V1Filing(unittest.TestCase):
 class AllFormsHaveMappings(unittest.TestCase):
     def test_request(self):
         missing_mappings = {}
-        whole_range = list(range(0, 1263800))
+        whole_range = list(range(0, 1288000))
         random_sample = random.sample(whole_range, 100)
         for i in random_sample:
             try:
@@ -252,6 +266,7 @@ if __name__ == '__main__':
         SenatePaperFiling('test_request'),
         CanParsePaperF3Z('test_request'),
         InauguralCommitteeFiling('test_request'),
+        ElectioneeringFiling('test_request'),
         UnnecessaryQuotes('test_request'),
         V5Filing('test_request'),
         V3Filing('test_request'),

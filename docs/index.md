@@ -195,6 +195,10 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.7 (November 2, 2018)
+- add types for F4, SF, and SL
+- fix issue causing incorrect mapping for F9
+
 ### 0.4.6 (October 29, 2018)
 - add mappings for paper versions of F4
 - add mappings for paper versions of F56

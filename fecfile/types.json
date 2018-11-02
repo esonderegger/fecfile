@@ -85,6 +85,25 @@
       }
     }
   },
+  "^f4.*": {
+    ".*": {
+      "^col_": {
+        "type": "float"
+      },
+      "^coverage_from_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^coverage_through_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
   "^f5[na]": {
     ".*": {
       "^coverage_from_date": {
@@ -135,6 +154,62 @@
         "type": "float"
       },
       "^contribution_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "(^f9$)|(^f9[an])": {
+    ".*": {
+      "^original_amendment_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^coverage_from_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^coverage_through_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^date_public_distribution": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^total_donations": {
+        "type": "float"
+      },
+      "^total_disbursements": {
+        "type": "float"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "^f92": {
+    ".*": {
+      "^contribution_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^contribution_amount": {
+        "type": "float"
+      }
+    }
+  },
+  "^f93": {
+    ".*": {
+      "^expenditure_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^expenditure_amount": {
+        "type": "float"
+      },
+      "^communication_date": {
         "type": "date",
         "format": "%Y%m%d"
       }
@@ -228,6 +303,35 @@
       },
       "^expenditure_amount": {
         "type": "float"
+      }
+    }
+  },
+  "^sf": {
+    ".*": {
+      "^expenditure_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^expenditure_amount": {
+        "type": "float"
+      },
+      "^aggregate_general_elec_expended": {
+        "type": "float"
+      }
+    }
+  },
+  "^sl": {
+    ".*": {
+      "^col_": {
+        "type": "float"
+      },
+      "^coverage_from_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^coverage_through_date": {
+        "type": "date",
+        "format": "%Y%m%d"
       }
     }
   }
