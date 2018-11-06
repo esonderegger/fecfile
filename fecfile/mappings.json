@@ -1832,6 +1832,49 @@
     ]
   },
   "(^f24$)|(^f24[an])": {
+    "^(P3.4|P3.3|P3.2)": [
+      "form_type",
+      "filer_committee_id_number",
+      "committee_name",
+      "report_type",
+      "original_amendment_date",
+      "treasurer_last_name",
+      "treasurer_first_name",
+      "treasurer_middle_name",
+      "treasurer_prefix",
+      "treasurer_suffix",
+      "date_signed",
+      "beginning_image_number",
+      "end_image_number",
+      "receipt_date"
+    ],
+    "^(P3.1|P3.0)": [
+      "form_type",
+      "filer_committee_id_number",
+      "committee_name",
+      "report_type",
+      "original_amendment_date",
+      "treasurer_last_name",
+      "treasurer_first_name",
+      "treasurer_middle_name",
+      "treasurer_prefix",
+      "treasurer_suffix",
+      "date_signed",
+      "beginning_image_number"
+    ],
+    "^(P2|P1)": [
+      "form_type",
+      "filer_committee_id_number",
+      "committee_name",
+      "report_type",
+      "treasurer_last_name",
+      "treasurer_first_name",
+      "treasurer_middle_name",
+      "treasurer_prefix",
+      "treasurer_suffix",
+      "date_signed",
+      "beginning_image_number"
+    ],
     "^8.3|8.2|8.1|8.0": [
       "form_type",
       "filer_committee_id_number",

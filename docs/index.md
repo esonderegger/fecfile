@@ -195,6 +195,9 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.9 (November 6, 2018)
+- add mappings for paper versions of F24
+
 ### 0.4.8 (November 6, 2018)
 - fix v5/3 mapping for F3P to include v1 and v2
 - make F5 mappings more explicit and include v6.1

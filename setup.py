@@ -13,7 +13,7 @@ requirements = [
 
 setup(
     name='fecfile',
-    version='0.4.8',
+    version='0.4.9',
     description='a python parser for the .fec file format',
     long_description=long_description,
     long_description_content_type="text/markdown",
