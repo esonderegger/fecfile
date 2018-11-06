@@ -62,7 +62,7 @@
       }
     }
   },
-  "^f3.*": {
+  "^(f3[ant]|f3p$|(f3p[^s|3])|f3x$|f3x[ant]|f3z)": {
     ".*": {
       "^col_": {
         "type": "float"
@@ -82,6 +82,24 @@
       "^election_date": {
         "type": "date",
         "format": "%Y%m%d"
+      }
+    }
+  },
+  "^f3s": {
+    ".*": {
+      "^date_general_election": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^date_day_after_general_election": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^[abcde]_": {
+        "type": "float"
+      },
+      "^(transfers|offsets|other|total)": {
+        "type": "float"
       }
     }
   },

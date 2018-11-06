@@ -159,6 +159,14 @@ class ElectioneeringFiling(unittest.TestCase):
         self.assertEqual(first_94['candidate_last_name'], 'Manchin')
 
 
+class Form3SFiling(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1156717)
+        summary = parsed['itemizations']['F3S'][0]
+        self.assertEqual(summary['a_total_contributions_no_loans'], 11469.22)
+        self.assertEqual(summary['total_disbursements'], 55324.77)
+
+
 class UnnecessaryQuotes(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(1157513)
@@ -267,6 +275,7 @@ if __name__ == '__main__':
         CanParsePaperF3Z('test_request'),
         InauguralCommitteeFiling('test_request'),
         ElectioneeringFiling('test_request'),
+        Form3SFiling('test_request'),
         UnnecessaryQuotes('test_request'),
         V5Filing('test_request'),
         V3Filing('test_request'),
