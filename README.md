@@ -190,6 +190,11 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.8 (November 6, 2018)
+- fix v5/3 mapping for F3P to include v1 and v2
+- make F5 mappings more explicit and include v6.1
+- add types for F3S
+
 ### 0.4.7 (November 2, 2018)
 - add types for F4, SF, and SL
 - fix issue causing incorrect mapping for F9
