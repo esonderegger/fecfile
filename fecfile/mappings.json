@@ -3513,7 +3513,7 @@
       "treasurer_name",
       "date_signed"
     ],
-    "^5.1|5.0|^3": [
+    "^(5.1|5.0|3|2|1)": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
