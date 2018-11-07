@@ -190,6 +190,10 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.10 (November 7, 2018)
+- strip whitespace when parsing values as float or date
+- fix mis-mapped field in paper F3 filings
+
 ### 0.4.9 (November 6, 2018)
 - add mappings for paper versions of F24
 
