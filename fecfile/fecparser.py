@@ -163,16 +163,18 @@ def getTyped(form, version, field, value, line_num):
                                 if prop['type'] == 'integer':
                                     return int(value)
                                 if prop['type'] == 'float':
-                                    if value == '' or value.lower() in nones:
+                                    stripped = value.strip()
+                                    if stripped == '' or stripped.lower() in nones:
                                         return None
-                                    sanitized = value.replace('%', '')
+                                    sanitized = stripped.replace('%', '')
                                     return float(sanitized)
                                 if prop['type'] == 'date':
                                     format = prop['format']
-                                    if value == '':
+                                    stripped = value.strip()
+                                    if stripped == '':
                                         return None
                                     parsed_date = datetime.strptime(
-                                        value,
+                                        stripped,
                                         format)
                                     return eastern.localize(parsed_date)
                             except ValueError:

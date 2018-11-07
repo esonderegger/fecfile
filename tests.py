@@ -7,6 +7,7 @@ import shutil
 import zipfile
 import random
 import sys
+import warnings
 
 
 class CandidateTest(unittest.TestCase):
@@ -167,6 +168,15 @@ class Form3SFiling(unittest.TestCase):
         self.assertEqual(summary['total_disbursements'], 55324.77)
 
 
+class WhiteSpaceNullFields(unittest.TestCase):
+    def test_request(self):
+        with warnings.catch_warnings(record=True) as w:
+            parsed = fecfile.from_http(476351)
+            filing = parsed['filing']
+            self.assertEqual(filing['report_code'], '12P')
+            self.assertEqual(len(w), 0)
+
+
 class UnnecessaryQuotes(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(1157513)
@@ -276,6 +286,7 @@ if __name__ == '__main__':
         InauguralCommitteeFiling('test_request'),
         ElectioneeringFiling('test_request'),
         Form3SFiling('test_request'),
+        WhiteSpaceNullFields('test_request'),
         UnnecessaryQuotes('test_request'),
         V5Filing('test_request'),
         V3Filing('test_request'),
