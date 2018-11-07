@@ -2228,7 +2228,7 @@
       "candidate_prefix",
       "candidate_suffix",
       "candidate_id_number",
-      "report_code",
+      "report_type",
       "col_b_gross_receipts_authorized_primary",
       "col_b_aggregate_personal_funds_primary",
       "col_b_gross_receipts_minus_personal_funds_primary",
