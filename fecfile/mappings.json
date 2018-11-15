@@ -5074,7 +5074,7 @@
       "col_a_cash_on_hand_close"
     ]
   },
-  "^f4[na]": {
+  "^f4[ant]": {
     "^(P3.4|P3.3|P3.2)": [
       "form_type",
       "filer_committee_id_number",
