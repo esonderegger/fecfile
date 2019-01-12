@@ -190,6 +190,11 @@ Almost too much to list:
 
 ## Changes
 
+### 0.4.11 (January 12, 2019)
+- handle files encoded in Windows 1252
+- fix for duplicate col_b_transfers_from_affiliated mapping
+- allow for form F4T
+
 ### 0.4.10 (November 7, 2018)
 - strip whitespace when parsing values as float or date
 - fix mis-mapped field in paper F3 filings
