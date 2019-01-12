@@ -249,6 +249,14 @@ class V1Filing(unittest.TestCase):
         self.assertEqual(sched_b[0]['expenditure_amount'], 286.61)
 
 
+class Windows1252Encoding(unittest.TestCase):
+    def test_read(self):
+        file_path = 'test-data/1260488.fec'
+        parsed = fecfile.from_file(file_path)
+        self.assertIsInstance(parsed['filing']['date_signed'], datetime)
+        self.assertEqual(parsed['filing']['city'], 'Denton')
+
+
 class AllFormsHaveMappings(unittest.TestCase):
     def test_request(self):
         missing_mappings = {}
@@ -293,6 +301,7 @@ if __name__ == '__main__':
         CommaInCSVFiling('test_request'),
         V2Filing('test_request'),
         V1Filing('test_request'),
+        Windows1252Encoding('test_read'),
     ])
     mappings_test = unittest.TestSuite([AllFormsHaveMappings('test_request')])
     if len(sys.argv) > 1 and sys.argv[1] == 'mappings':

@@ -68,9 +68,13 @@ def from_file(file_path):
     a ``str`` of the path to the file, and returns the parsed Python object.
     """
     parsed = {}
-    with open(file_path) as file:
-        unparsed = file.read()
-        parsed = fecparser.loads(unparsed)
+    try:
+        with open(file_path, 'r') as file:
+            unparsed = file.read()
+    except UnicodeDecodeError:
+        with open(file_path, 'r', encoding='ISO-8859-1') as file:
+            unparsed = file.read()
+    parsed = fecparser.loads(unparsed)
     return parsed
 
 
