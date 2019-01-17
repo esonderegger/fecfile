@@ -6,20 +6,11 @@ import os
 import re
 import warnings
 
-
-
-MAPPING_CACHE_KEY = "%s:%s"
-MAPPING_CACHE = {}
-
-TYPE_CACHE_KEY = "%s:%s:%s"
-TYPE_CACHE = {}
-
-
+from .cache import getTypeMapping, getMapping
 
 class FecParserTypeWarning(UserWarning):
     """when data in an FEC filing doesn't match types.json"""
     pass
-
 
 class FecParserMissingMappingError(Exception):
     """when a line in an FEC filing doesn't have a form/version mapping"""
@@ -31,7 +22,6 @@ class FecParserMissingMappingError(Exception):
                 f=opts['form'],
             )
         super(FecParserMissingMappingError, self).__init__(msg)
-
 
 this_file = os.path.abspath(__file__)
 this_dir = os.path.dirname(this_file)
@@ -128,35 +118,6 @@ def parse_header(lines):
     parsed = parse_line(lines[0], fields[1], 0)
     return parsed, fields[1], 1
 
-
-def get_mapping_from_regex(form, version):
-    """ Raises FecParserMissingMappingError if missing"""
-
-    for mapping in mappings.keys():    
-        if re.match(mapping, form, re.IGNORECASE):
-            versions = mappings[mapping].keys()
-            for v in versions:
-                if re.match(v, version, re.IGNORECASE):
-                    return(mappings[mapping][v])
-
-    raise FecParserMissingMappingError({
-        'form': form,
-        'version': version,
-    })
-
-def get_mapping(form, version):
-    """ caches the mapping to dict """
-    
-    key = MAPPING_CACHE_KEY % (form,version)
-    try: 
-        mapping = MAPPING_CACHE[key]
-    except KeyError:
-        mapping = get_mapping_from_regex(form, version)
-        MAPPING_CACHE[key] = mapping
-
-    return mapping
-
-
 def parse_line(line, version, line_num=None):
     ascii_separator = True
     if version is None or version[0] in comma_versions:
@@ -166,7 +127,7 @@ def parse_line(line, version, line_num=None):
         return None
     form = fields[0]
     
-    this_version_mapping = get_mapping(form, version)
+    this_version_mapping = getMapping(mappings, form, version)
     out = {}
     for i in range(len(this_version_mapping)):
         val = fields[i] if i < len(fields) else ''
@@ -176,32 +137,8 @@ def parse_line(line, version, line_num=None):
 
 nones = ['none', 'n/a']
 
-def getTypeMapping_from_regex(form, version, field):
-    for mapping in types.keys():
-        if re.match(mapping, form, re.IGNORECASE):
-            versions = types[mapping].keys()
-            for v in versions:
-                if re.match(v, version, re.IGNORECASE):
-                    properties = types[mapping][v]
-                    prop_keys = properties.keys()
-                    for prop_key in prop_keys:
-                        if re.match(prop_key, field, re.IGNORECASE):
-                            prop = properties[prop_key]
-                            return prop
-    return None
-
-def getTypeMapping(form, version, field):
-    """ caches the mapping to dict """   
-    key = TYPE_CACHE_KEY % (form, version, field)
-    try: 
-        mapping = TYPE_CACHE[key]
-    except KeyError:
-        mapping = getTypeMapping_from_regex(form, version, field)
-        TYPE_CACHE[key] = mapping
-    return mapping
-
 def getTyped(form, version, field, value, line_num):
-    prop = getTypeMapping(form, version, field)
+    prop = getTypeMapping(types, form, version, field)
     if prop:
         try:
             if prop['type'] == 'integer':
@@ -237,7 +174,6 @@ def getTyped(form, version, field, value, line_num):
             )
             return None
     return value
-
 
 def print_example(parsed):
     out = {'filing': parsed['filing'], 'itemizations': {}}
