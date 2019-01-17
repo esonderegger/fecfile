@@ -12,16 +12,6 @@ class FecParserTypeWarning(UserWarning):
     """when data in an FEC filing doesn't match types.json"""
     pass
 
-class FecParserMissingMappingError(Exception):
-    """when a line in an FEC filing doesn't have a form/version mapping"""
-    def __init__(self, opts, msg=None):
-        if msg is None:
-            msg = ('cannot parse version {v} of form {f} - '
-                   'no mapping found').format(
-                v=opts['version'],
-                f=opts['form'],
-            )
-        super(FecParserMissingMappingError, self).__init__(msg)
 
 this_file = os.path.abspath(__file__)
 this_dir = os.path.dirname(this_file)

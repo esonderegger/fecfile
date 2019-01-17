@@ -7,6 +7,17 @@ MAPPING_CACHE = {}
 TYPE_CACHE_KEY = "%s:%s:%s"
 TYPE_CACHE = {}
 
+class FecParserMissingMappingError(Exception):
+    """when a line in an FEC filing doesn't have a form/version mapping"""
+    def __init__(self, opts, msg=None):
+        if msg is None:
+            msg = ('cannot parse version {v} of form {f} - '
+                   'no mapping found').format(
+                v=opts['version'],
+                f=opts['form'],
+            )
+        super(FecParserMissingMappingError, self).__init__(msg)
+
 
 
 def getMapping_from_regex(mappings, form, version):
