@@ -5,11 +5,18 @@ import requests
 FecParserMissingMappingError = cache.FecParserMissingMappingError
 
 
-def loads(input):
+def loads(input, options={}):
     """Deserialize ``input`` (a ``str`` instance
     containing an FEC document) to a Python object.
+    Optionally, pass an array of strings to options['filter_itemizations'].
+    If included, loads will only parse lines that start with any of the
+    strings in that array. For example, passing
+    {'filter_itemizations': ['SC', 'SD']} to options, will only include
+    Schedule C and Schedule D itemizations. Also, passing
+    {'filter_itemizations': []} to options will result in only the header
+    and the filing being parsed and returned.
     """
-    return fecparser.loads(input)
+    return fecparser.loads(input, options)
 
 
 def parse_header(hdr):
@@ -44,7 +51,7 @@ def parse_line(line, version, line_num=None):
     return fecparser.parse_line(line, version, line_num)
 
 
-def from_http(file_number):
+def from_http(file_number, options={}):
     """Utility method for getting a parsed Python representation of an FEC
     filing when you don't already have it on your computer. This method takes
     either a ``str`` or ``int`` as a ``file_number`` and requests it from
@@ -59,23 +66,21 @@ def from_http(file_number):
         r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
     if r.status_code == 404:
         return None
-    return fecparser.loads(r.text)
+    return fecparser.loads(r.text, options=options)
 
 
-def from_file(file_path):
+def from_file(file_path, options={}):
     """Utility method for getting a parsed Python representation of an FEC
     filing when you have the .fec file on your computer. This method takes
     a ``str`` of the path to the file, and returns the parsed Python object.
     """
-    parsed = {}
     try:
         with open(file_path, 'r') as file:
             unparsed = file.read()
     except UnicodeDecodeError:
         with open(file_path, 'r', encoding='ISO-8859-1') as file:
             unparsed = file.read()
-    parsed = fecparser.loads(unparsed)
-    return parsed
+    return fecparser.loads(unparsed, options=options)
 
 
 def print_example(parsed):

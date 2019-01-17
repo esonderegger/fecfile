@@ -257,6 +257,16 @@ class Windows1252Encoding(unittest.TestCase):
         self.assertEqual(parsed['filing']['city'], 'Denton')
 
 
+class OptionsFilterItemizations(unittest.TestCase):
+    def test_read(self):
+        file_path = 'test-data/1229017.fec'
+        a_filter = {'filter_itemizations': ['SB']}
+        parsed = fecfile.from_file(file_path, options=a_filter)
+        self.assertEqual(parsed['filing']['report_code'], '12P')
+        self.assertEqual(len(parsed['itemizations']['Schedule B']), 47)
+        self.assertNotIn('Schedule A', parsed['itemizations'])
+
+
 class AllFormsHaveMappings(unittest.TestCase):
     def test_request(self):
         missing_mappings = {}
@@ -302,6 +312,7 @@ if __name__ == '__main__':
         V2Filing('test_request'),
         V1Filing('test_request'),
         Windows1252Encoding('test_read'),
+        OptionsFilterItemizations('test_read'),
     ])
     mappings_test = unittest.TestSuite([AllFormsHaveMappings('test_request')])
     if len(sys.argv) > 1 and sys.argv[1] == 'mappings':

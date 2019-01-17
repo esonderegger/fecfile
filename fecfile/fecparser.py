@@ -29,7 +29,14 @@ eastern = timezone('US/Eastern')
 comma_versions = ['1', '2', '3', '5']
 
 
-def loads(input):
+def include_line(line, filter_list):
+    for f in filter_list:
+        if line.startswith(f):
+            return True
+    return False
+
+
+def loads(input, options={}):
     version = None
     lines = input.split('\n')
     out = {'itemizations': {}, 'text': [], 'header': {}, 'filing': {}}
@@ -37,6 +44,9 @@ def loads(input):
     text_section = False
     for i in range(header_length, len(lines)):
         line = lines[i]
+        if i > header_length and 'filter_itemizations' in options:
+            if not include_line(line, options['filter_itemizations']):
+                continue
         stripped_line = line.strip().upper()
         if stripped_line == '[BEGINTEXT]' or stripped_line == '[BEGIN TEXT]':
             text_section = True
