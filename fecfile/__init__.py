@@ -1,8 +1,8 @@
-from . import fecparser
+from . import fecparser, cache
 import requests
 
 
-FecParserMissingMappingError = fecparser.FecParserMissingMappingError
+FecParserMissingMappingError = cache.FecParserMissingMappingError
 
 
 def loads(input):

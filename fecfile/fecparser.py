@@ -6,22 +6,11 @@ import os
 import re
 import warnings
 
+from .cache import getTypeMapping, getMapping
 
 class FecParserTypeWarning(UserWarning):
     """when data in an FEC filing doesn't match types.json"""
     pass
-
-
-class FecParserMissingMappingError(Exception):
-    """when a line in an FEC filing doesn't have a form/version mapping"""
-    def __init__(self, opts, msg=None):
-        if msg is None:
-            msg = ('cannot parse version {v} of form {f} - '
-                   'no mapping found').format(
-                v=opts['version'],
-                f=opts['form'],
-            )
-        super(FecParserMissingMappingError, self).__init__(msg)
 
 
 this_file = os.path.abspath(__file__)
@@ -119,7 +108,6 @@ def parse_header(lines):
     parsed = parse_line(lines[0], fields[1], 0)
     return parsed, fields[1], 1
 
-
 def parse_line(line, version, line_num=None):
     ascii_separator = True
     if version is None or version[0] in comma_versions:
@@ -127,73 +115,55 @@ def parse_line(line, version, line_num=None):
     fields = fields_from_line(line, use_ascii_28=ascii_separator)
     if len(fields) < 2:
         return None
-    for mapping in mappings.keys():
-        form = fields[0]
-        if re.match(mapping, form, re.IGNORECASE):
-            versions = mappings[mapping].keys()
-            for v in versions:
-                if re.match(v, version, re.IGNORECASE):
-                    out = {}
-                    for i in range(len(mappings[mapping][v])):
-                        val = fields[i] if i < len(fields) else ''
-                        k = mappings[mapping][v][i]
-                        out[k] = getTyped(form, version, k, val, line_num)
-                    return out
-    raise FecParserMissingMappingError({
-        'form': form,
-        'version': version,
-    })
-
+    form = fields[0]
+    
+    this_version_mapping = getMapping(mappings, form, version)
+    out = {}
+    for i in range(len(this_version_mapping)):
+        val = fields[i] if i < len(fields) else ''
+        k = this_version_mapping[i]
+        out[k] = getTyped(form, version, k, val, line_num)
+    return out
 
 nones = ['none', 'n/a']
 
-
 def getTyped(form, version, field, value, line_num):
-    for mapping in types.keys():
-        if re.match(mapping, form, re.IGNORECASE):
-            versions = types[mapping].keys()
-            for v in versions:
-                if re.match(v, version, re.IGNORECASE):
-                    properties = types[mapping][v]
-                    prop_keys = properties.keys()
-                    for prop_key in prop_keys:
-                        if re.match(prop_key, field, re.IGNORECASE):
-                            prop = properties[prop_key]
-                            try:
-                                if prop['type'] == 'integer':
-                                    return int(value)
-                                if prop['type'] == 'float':
-                                    stripped = value.strip()
-                                    if stripped == '' or stripped.lower() in nones:
-                                        return None
-                                    sanitized = stripped.replace('%', '')
-                                    return float(sanitized)
-                                if prop['type'] == 'date':
-                                    format = prop['format']
-                                    stripped = value.strip()
-                                    if stripped == '':
-                                        return None
-                                    parsed_date = datetime.strptime(
-                                        stripped,
-                                        format)
-                                    return eastern.localize(parsed_date)
-                            except ValueError:
-                                warnings.warn(
-                                    'cannot parse value: {v}, as type: {t}, '
-                                    'for field: {f}, in form: {o}, '
-                                    'version: {r} (line {n})'.format(
-                                        v=value,
-                                        t=prop['type'],
-                                        f=field,
-                                        o=form,
-                                        r=version,
-                                        n='unknown' if line_num is None else line_num + 1,
-                                    ),
-                                    FecParserTypeWarning,
-                                )
-                                return None
+    prop = getTypeMapping(types, form, version, field)
+    if prop:
+        try:
+            if prop['type'] == 'integer':
+                return int(value)
+            if prop['type'] == 'float':
+                stripped = value.strip()
+                if stripped == '' or stripped.lower() in nones:
+                    return None
+                sanitized = stripped.replace('%', '')
+                return float(sanitized)
+            if prop['type'] == 'date':
+                format = prop['format']
+                stripped = value.strip()
+                if stripped == '':
+                    return None
+                parsed_date = datetime.strptime(
+                    stripped,
+                    format)
+                return eastern.localize(parsed_date)
+        except ValueError:
+            warnings.warn(
+                'cannot parse value: {v}, as type: {t}, '
+                'for field: {f}, in form: {o}, '
+                'version: {r} (line {n})'.format(
+                    v=value,
+                    t=prop['type'],
+                    f=field,
+                    o=form,
+                    r=version,
+                    n='unknown' if line_num is None else line_num + 1,
+                ),
+                FecParserTypeWarning,
+            )
+            return None
     return value
-
 
 def print_example(parsed):
     out = {'filing': parsed['filing'], 'itemizations': {}}
