@@ -14,22 +14,19 @@ def speed_test(filepath):
     with open(filepath) as file:
         linecount = 0
         version = None
-        header = None
         for line in file:
-            linecount+=1
+            linecount += 1
             if version is None:
                 results = fecfile.parse_header(line)
-                header = results[0]
                 version = results[1]
             else:
                 parsed = fecfile.parse_line(line, version)
-            
                 if not parsed:
                     print("** not parsed %s" % line)
-                else:   
+                else:
                     # count the form type, if given
                     try:
-                        formtypecount.update({parsed['form_type'].upper():1})
+                        formtypecount.update({parsed['form_type'].upper(): 1})
                     except KeyError:
                         continue
 
