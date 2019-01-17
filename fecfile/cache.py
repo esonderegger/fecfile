@@ -18,12 +18,10 @@ class FecParserMissingMappingError(Exception):
             )
         super(FecParserMissingMappingError, self).__init__(msg)
 
-
-
 def getMapping_from_regex(mappings, form, version):
     """ Raises FecParserMissingMappingError if missing"""
 
-    for mapping in mappings.keys():    
+    for mapping in mappings.keys(): 
         if re.match(mapping, form, re.IGNORECASE):
             versions = mappings[mapping].keys()
             for v in versions:
@@ -36,19 +34,17 @@ def getMapping_from_regex(mappings, form, version):
     })
 
 def getMapping(mappings, form, version):
-    """ caches the mapping to dict """
-    
+    """ Tries to find the mapping from cache before looking it up w regex """
     key = MAPPING_CACHE_KEY % (form,version)
-    try: 
+    try:
         mapping = MAPPING_CACHE[key]
     except KeyError:
         mapping = getMapping_from_regex(mappings, form, version)
         MAPPING_CACHE[key] = mapping
-
     return mapping
 
-
 def getTypeMapping_from_regex(types, form, version, field):
+    """ Tries to find the mapping from cache before looking it up w regex """
     for mapping in types.keys():
         if re.match(mapping, form, re.IGNORECASE):
             versions = types[mapping].keys()
@@ -63,9 +59,9 @@ def getTypeMapping_from_regex(types, form, version, field):
     return None
 
 def getTypeMapping(types, form, version, field):
-    """ caches the mapping to dict """   
+    """ caches the mapping to dict """
     key = TYPE_CACHE_KEY % (form, version, field)
-    try: 
+    try:
         mapping = TYPE_CACHE[key]
     except KeyError:
         mapping = getTypeMapping_from_regex(types, form, version, field)
