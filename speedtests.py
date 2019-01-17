@@ -5,6 +5,7 @@ import fecfile
 from collections import Counter
 
 
+
 def speed_test(filepath):
     print("+++++\nRunning speed test on %s" % filepath)
     formtypecount = Counter()

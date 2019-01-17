@@ -7,6 +7,15 @@ import re
 import warnings
 
 
+
+MAPPING_CACHE_KEY = "%s:%s"
+MAPPING_CACHE = {}
+
+TYPE_CACHE_KEY = "%s:%s:%s"
+TYPE_CACHE = {}
+
+
+
 class FecParserTypeWarning(UserWarning):
     """when data in an FEC filing doesn't match types.json"""
     pass
@@ -120,6 +129,34 @@ def parse_header(lines):
     return parsed, fields[1], 1
 
 
+def get_mapping_from_regex(form, version):
+    """ Raises FecParserMissingMappingError if missing"""
+
+    for mapping in mappings.keys():    
+        if re.match(mapping, form, re.IGNORECASE):
+            versions = mappings[mapping].keys()
+            for v in versions:
+                if re.match(v, version, re.IGNORECASE):
+                    return(mappings[mapping][v])
+
+    raise FecParserMissingMappingError({
+        'form': form,
+        'version': version,
+    })
+
+def get_mapping(form, version):
+    """ caches the mapping to dict """
+    
+    key = MAPPING_CACHE_KEY % (form,version)
+    try: 
+        mapping = MAPPING_CACHE[key]
+    except KeyError:
+        mapping = get_mapping_from_regex(form, version)
+        MAPPING_CACHE[key] = mapping
+
+    return mapping
+
+
 def parse_line(line, version, line_num=None):
     ascii_separator = True
     if version is None or version[0] in comma_versions:
@@ -127,28 +164,19 @@ def parse_line(line, version, line_num=None):
     fields = fields_from_line(line, use_ascii_28=ascii_separator)
     if len(fields) < 2:
         return None
-    for mapping in mappings.keys():
-        form = fields[0]
-        if re.match(mapping, form, re.IGNORECASE):
-            versions = mappings[mapping].keys()
-            for v in versions:
-                if re.match(v, version, re.IGNORECASE):
-                    out = {}
-                    for i in range(len(mappings[mapping][v])):
-                        val = fields[i] if i < len(fields) else ''
-                        k = mappings[mapping][v][i]
-                        out[k] = getTyped(form, version, k, val, line_num)
-                    return out
-    raise FecParserMissingMappingError({
-        'form': form,
-        'version': version,
-    })
-
+    form = fields[0]
+    
+    this_version_mapping = get_mapping(form, version)
+    out = {}
+    for i in range(len(this_version_mapping)):
+        val = fields[i] if i < len(fields) else ''
+        k = this_version_mapping[i]
+        out[k] = getTyped(form, version, k, val, line_num)
+    return out
 
 nones = ['none', 'n/a']
 
-
-def getTyped(form, version, field, value, line_num):
+def getTypeMapping_from_regex(form, version, field):
     for mapping in types.keys():
         if re.match(mapping, form, re.IGNORECASE):
             versions = types[mapping].keys()
@@ -159,39 +187,55 @@ def getTyped(form, version, field, value, line_num):
                     for prop_key in prop_keys:
                         if re.match(prop_key, field, re.IGNORECASE):
                             prop = properties[prop_key]
-                            try:
-                                if prop['type'] == 'integer':
-                                    return int(value)
-                                if prop['type'] == 'float':
-                                    stripped = value.strip()
-                                    if stripped == '' or stripped.lower() in nones:
-                                        return None
-                                    sanitized = stripped.replace('%', '')
-                                    return float(sanitized)
-                                if prop['type'] == 'date':
-                                    format = prop['format']
-                                    stripped = value.strip()
-                                    if stripped == '':
-                                        return None
-                                    parsed_date = datetime.strptime(
-                                        stripped,
-                                        format)
-                                    return eastern.localize(parsed_date)
-                            except ValueError:
-                                warnings.warn(
-                                    'cannot parse value: {v}, as type: {t}, '
-                                    'for field: {f}, in form: {o}, '
-                                    'version: {r} (line {n})'.format(
-                                        v=value,
-                                        t=prop['type'],
-                                        f=field,
-                                        o=form,
-                                        r=version,
-                                        n='unknown' if line_num is None else line_num + 1,
-                                    ),
-                                    FecParserTypeWarning,
-                                )
-                                return None
+                            return prop
+    return None
+
+def getTypeMapping(form, version, field):
+    """ caches the mapping to dict """   
+    key = TYPE_CACHE_KEY % (form, version, field)
+    try: 
+        mapping = TYPE_CACHE[key]
+    except KeyError:
+        mapping = getTypeMapping_from_regex(form, version, field)
+        TYPE_CACHE[key] = mapping
+    return mapping
+
+def getTyped(form, version, field, value, line_num):
+    prop = getTypeMapping(form, version, field)
+    if prop:
+        try:
+            if prop['type'] == 'integer':
+                return int(value)
+            if prop['type'] == 'float':
+                stripped = value.strip()
+                if stripped == '' or stripped.lower() in nones:
+                    return None
+                sanitized = stripped.replace('%', '')
+                return float(sanitized)
+            if prop['type'] == 'date':
+                format = prop['format']
+                stripped = value.strip()
+                if stripped == '':
+                    return None
+                parsed_date = datetime.strptime(
+                    stripped,
+                    format)
+                return eastern.localize(parsed_date)
+        except ValueError:
+            warnings.warn(
+                'cannot parse value: {v}, as type: {t}, '
+                'for field: {f}, in form: {o}, '
+                'version: {r} (line {n})'.format(
+                    v=value,
+                    t=prop['type'],
+                    f=field,
+                    o=form,
+                    r=version,
+                    n='unknown' if line_num is None else line_num + 1,
+                ),
+                FecParserTypeWarning,
+            )
+            return None
     return value
 
 
