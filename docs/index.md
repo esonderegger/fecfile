@@ -180,6 +180,8 @@ python tests.py
 
 This project would be impossible without the work done by the kind folks at The New York Times [Newsdev team](https://github.com/newsdev). In particular, this project relies heavily on [fech](https://github.com/NYTimes/Fech) although it actually uses a transformation of [this fork](https://github.com/PublicI/fec-parse/blob/master/lib/renderedmaps.js).
 
+Many thanks to [Jacob Fenton](https://github.com/jsfenfen) for writing the caching logic and for providing valuable feedback about the overall design of this library.
+
 ## Contributing
 
 I would love some help with this, particularly with the mapping from strings to `int`, `float`, and `datetime` types. Please [create an issue](https://github.com/esonderegger/fecfile/issues) or [make a pull request](https://github.com/esonderegger/fecfile/pulls). Or reach out privately via email - that works too.
@@ -194,6 +196,10 @@ Almost too much to list:
 - elegantly handle errors
 
 ## Changes
+
+### 0.5.0 (January 17, 2019)
+- add ability to filter which types of itemizations to parse
+- cache mappings and types for much faster parsing
 
 ### 0.4.11 (January 12, 2019)
 - handle files encoded in Windows 1252

@@ -3,10 +3,10 @@ from pytz import timezone
 import csv
 import json
 import os
-import re
 import warnings
 
 from .cache import getTypeMapping, getMapping
+
 
 class FecParserTypeWarning(UserWarning):
     """when data in an FEC filing doesn't match types.json"""
@@ -29,7 +29,14 @@ eastern = timezone('US/Eastern')
 comma_versions = ['1', '2', '3', '5']
 
 
-def loads(input):
+def include_line(line, filter_list):
+    for f in filter_list:
+        if line.startswith(f):
+            return True
+    return False
+
+
+def loads(input, options={}):
     version = None
     lines = input.split('\n')
     out = {'itemizations': {}, 'text': [], 'header': {}, 'filing': {}}
@@ -37,6 +44,9 @@ def loads(input):
     text_section = False
     for i in range(header_length, len(lines)):
         line = lines[i]
+        if i > header_length and 'filter_itemizations' in options:
+            if not include_line(line, options['filter_itemizations']):
+                continue
         stripped_line = line.strip().upper()
         if stripped_line == '[BEGINTEXT]' or stripped_line == '[BEGIN TEXT]':
             text_section = True
@@ -108,6 +118,7 @@ def parse_header(lines):
     parsed = parse_line(lines[0], fields[1], 0)
     return parsed, fields[1], 1
 
+
 def parse_line(line, version, line_num=None):
     ascii_separator = True
     if version is None or version[0] in comma_versions:
@@ -116,7 +127,6 @@ def parse_line(line, version, line_num=None):
     if len(fields) < 2:
         return None
     form = fields[0]
-    
     this_version_mapping = getMapping(mappings, form, version)
     out = {}
     for i in range(len(this_version_mapping)):
@@ -125,7 +135,9 @@ def parse_line(line, version, line_num=None):
         out[k] = getTyped(form, version, k, val, line_num)
     return out
 
+
 nones = ['none', 'n/a']
+
 
 def getTyped(form, version, field, value, line_num):
     prop = getTypeMapping(types, form, version, field)
@@ -164,6 +176,7 @@ def getTyped(form, version, field, value, line_num):
             )
             return None
     return value
+
 
 def print_example(parsed):
     out = {'filing': parsed['filing'], 'itemizations': {}}
