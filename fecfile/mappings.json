@@ -7480,8 +7480,22 @@
       "receipt_date",
       "transferred_amount",
       "total_amount_transferred",
-      "",
+      "amended_cd",
       "transaction_id"
+    ],
+    "^2": [
+      "form_type",
+      "filer_committee_id_number",
+      "account_name",
+      "receipt_date",
+      "total_amount_transferred",
+      "administrative_voter_drive_activity",
+      "direct_fundraising",
+      "exempt_activity",
+      "amended_cd",
+      "transaction_id",
+      "orig_tran_id",
+      "supr_tran_id"
     ]
   },
   "^h4": {
