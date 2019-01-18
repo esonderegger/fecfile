@@ -31,7 +31,7 @@ comma_versions = ['1', '2', '3', '5']
 
 def include_line(line, filter_list):
     for f in filter_list:
-        if line.startswith(f):
+        if line.startswith(f) or line.startswith('"' + f):
             return True
     return False
 
