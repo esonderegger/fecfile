@@ -338,6 +338,21 @@
       }
     }
   },
+  "^si": {
+    ".*": {
+      "^col_": {
+        "type": "float"
+      },
+      "^coverage_from_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^coverage_through_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
   "^sl": {
     ".*": {
       "^col_": {

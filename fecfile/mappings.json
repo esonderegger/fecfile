@@ -10746,6 +10746,41 @@
       "back_reference_sched_name"
     ]
   },
+  "^si": {
+    "^(3|5)": [
+      "form_type",
+      "filer_committee_id_number",
+      "bank_account_id",
+      "account_name",
+      "coverage_from_date",
+      "coverage_through_date",
+      "col_a_total_receipts",
+      "col_a_transfers_to_fed",
+      "col_a_transfers_to_state_local",
+      "col_a_direct_state_local_support",
+      "col_a_other_disbursements",
+      "col_a_total_disbursements",
+      "col_a_cash_on_hand_beginning_period",
+      "col_a_receipts_period",
+      "col_a_subtotal",
+      "col_a_disbursements_period",
+      "col_a_cash_on_hand_close_of_period",
+      "col_b_total_receipts",
+      "col_b_transfers_to_fed",
+      "col_b_transfers_to_state_local",
+      "col_b_direct_state_local_support",
+      "col_b_other_disbursements",
+      "col_b_total_disbursements",
+      "col_b_cash_on_hand_beginning_period",
+      "col_b_receipts_period",
+      "col_b_subtotal",
+      "col_b_disbursements_period",
+      "col_b_cash_on_hand_close_of_period",
+      "amended_cd",
+      "transaction_id",
+      "account_identifier"
+    ]
+  },
   "^sl": {
     "^(P3|P2|P1)": [
       "form_type",

@@ -65,6 +65,13 @@ class HasScheduleD(unittest.TestCase):
         self.assertEqual(sched_d['balance_at_close_this_period'], 26622.00)
 
 
+class HasScheduleI(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(99840, {'filter_itemizations': ['SI']})
+        sched_i = parsed['itemizations']['Schedule I'][0]
+        self.assertEqual(sched_i['col_a_subtotal'], 99592.46)
+
+
 class HandleF1FromWebForms(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(1229011)
@@ -295,6 +302,7 @@ if __name__ == '__main__':
         IndependentExpendituresReport('test_request'),
         HasScheduleC('test_request'),
         HasScheduleD('test_request'),
+        HasScheduleI('test_request'),
         HandleF1FromWebForms('test_request'),
         HandlePercentInNumber('test_request'),
         HandleNANumber('test_request'),
