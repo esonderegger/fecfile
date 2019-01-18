@@ -4957,7 +4957,7 @@
       "col_a_net_operating_expenditures",
       "image_number"
     ],
-    "^8.1|8.0|7.0|6.4": [
+    "^(8.1|8.0|7.0|6|5|3|2|1)": [
       "form_type",
       "filer_committee_id_number",
       "principal_committee_name",
