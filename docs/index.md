@@ -197,6 +197,11 @@ Almost too much to list:
 
 ## Changes
 
+### 0.5.1 (January 18, 2019)
+- update mappings versions for F3Z
+- add mappings and types for schedule I
+- allow filtering of itemizations for comma-delimited filings
+
 ### 0.5.0 (January 17, 2019)
 - add ability to filter which types of itemizations to parse
 - cache mappings and types for much faster parsing
