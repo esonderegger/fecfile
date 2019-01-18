@@ -6136,7 +6136,7 @@
       "signer_suffix",
       "date_signed"
     ],
-    "^5.3|5.2|5.1|5.0|^3.0": [
+    "^(5.3|5.2|5.1|5.0|3.0|2|1)": [
       "form_type",
       "filer_committee_id_number",
       "committee_name",
@@ -6196,7 +6196,7 @@
       "contributor_employer",
       "contributor_occupation"
     ],
-    "^5.3|5.2|5.1|5.0|^3.0": [
+    "^(5.3|5.2|5.1|5.0|3.0|2)": [
       "form_type",
       "filer_committee_id_number",
       "entity_type",
@@ -6222,7 +6222,7 @@
       "conduit_city",
       "conduit_state",
       "conduit_zip_code",
-      "",
+      "amended_cd",
       "transaction_id"
     ]
   },
