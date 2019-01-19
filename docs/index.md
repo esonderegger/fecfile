@@ -82,10 +82,18 @@ with open('1263179.fec') as file:
 <h3 id="fecfile.loads">loads</h3>
 
 ```python
-loads(input)
+loads(input, options={})
 ```
 Deserialize ``input`` (a ``str`` instance
 containing an FEC document) to a Python object.
+
+Optionally, pass an array of strings to ``options['filter_itemizations']``.
+If included, ``loads`` will only parse lines that start with any of the
+strings in that array. For example, passing
+``{'filter_itemizations': ['SC', 'SD']}`` to ``options``, will only include
+Schedule C and Schedule D itemizations. Also, passing
+``{'filter_itemizations': []}`` to ``options`` will result in only the header
+and the filing being parsed and returned.
 
 <h3 id="fecfile.parse_header">parse_header</h3>
 
@@ -121,21 +129,27 @@ included in the error/warning message.
 <h3 id="fecfile.from_http">from_http</h3>
 
 ```python
-from_http(file_number)
+from_http(file_number, options={})
 ```
 Utility method for getting a parsed Python representation of an FEC
 filing when you don't already have it on your computer. This method takes
 either a ``str`` or ``int`` as a ``file_number`` and requests it from
 the ``docquery.fec.gov`` server, then parses the response.
 
+See [above](#fecfile.loads) for how documentation on how to use the optional
+``options`` argument.
+
 <h3 id="fecfile.from_file">from_file</h3>
 
 ```python
-from_file(file_path)
+from_file(file_path, options={})
 ```
 Utility method for getting a parsed Python representation of an FEC
 filing when you have the .fec file on your computer. This method takes
 a ``str`` of the path to the file, and returns the parsed Python object.
+
+See [above](#fecfile.loads) for how documentation on how to use the optional
+``options`` argument.
 
 <h3 id="fecfile.print_example">print_example</h3>
 
@@ -196,6 +210,13 @@ Almost too much to list:
 - elegantly handle errors
 
 ## Changes
+
+### 0.5.2 (January 19, 2019)
+- add Form 1 mappings for version 2
+- add Schedule F mappings for version 2
+- update mappings regexes for F6 and F65
+- add H4 mappings for version 2
+- add H3 mappings for version 2
 
 ### 0.5.1 (January 18, 2019)
 - update mappings versions for F3Z
