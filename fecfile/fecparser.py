@@ -126,7 +126,7 @@ def parse_line(line, version, line_num=None):
     fields = fields_from_line(line, use_ascii_28=ascii_separator)
     if len(fields) < 2:
         return None
-    form = fields[0]
+    form = fields[0].strip()
     this_version_mapping = getMapping(mappings, form, version)
     out = {}
     for i in range(len(this_version_mapping)):

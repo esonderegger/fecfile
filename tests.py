@@ -80,6 +80,21 @@ class HandleF1FromWebForms(unittest.TestCase):
         self.assertIsInstance(parsed['filing']['effective_date'], datetime)
 
 
+class HandlePaperF1M(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1101469)
+        self.assertEqual(parsed['header']['fec_version'], 'P3.2')
+        self.assertEqual(parsed['filing']['city'], 'LUBBOCK')
+        self.assertIsInstance(parsed['filing']['date_signed'], datetime)
+
+
+class HandleSpaceInFormType(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(807197)
+        self.assertEqual(parsed['header']['fec_version'], 'P2.6')
+        self.assertEqual(parsed['filing']['street_1'], '21 NOB HILL DRIVE')
+
+
 class HandlePercentInNumber(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(1235309)
@@ -304,6 +319,8 @@ if __name__ == '__main__':
         HasScheduleD('test_request'),
         HasScheduleI('test_request'),
         HandleF1FromWebForms('test_request'),
+        HandlePaperF1M('test_request'),
+        HandleSpaceInFormType('test_request'),
         HandlePercentInNumber('test_request'),
         HandleNANumber('test_request'),
         ConvertZipFileToJSON('test_convert'),
