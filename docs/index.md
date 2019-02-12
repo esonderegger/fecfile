@@ -211,6 +211,11 @@ Almost too much to list:
 
 ## Changes
 
+### 0.5.3 (February 12, 2019)
+- handle trailing whitespace in form_type field
+- fix regex for F1M
+- fix F5 for P3.2 and P3.3
+
 ### 0.5.2 (January 19, 2019)
 - add Form 1 mappings for version 2
 - add Schedule F mappings for version 2
