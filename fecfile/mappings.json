@@ -1091,7 +1091,7 @@
       "back_reference_sched_name"
     ]
   },
-  "(^f1m[a|n])": {
+  "^(f1m$|f1m[a|n])": {
     "^P3.2|^P3.3|^P3.4": [
       "form_type",
       "filer_committee_id_number",
