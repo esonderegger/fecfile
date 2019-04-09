@@ -31,31 +31,78 @@ These methods will return a Python dictionary, with keys for `header`, `filing`,
 
 ```
 import fecfile
-import json
 
 filing1 = fecfile.from_file('1229017.fec')
-print(json.dumps(filing1, sort_keys=True, indent=2, default=str))
+print('${:,.2f}'.format(filing1['filing']['col_a_total_receipts']))
 
 filing2 = fecfile.from_http(1146148)
-print(json.dumps(filing2, sort_keys=True, indent=2, default=str))
+print(filing2['filing']['committee_name'])
+
+filing3 = fecfile.from_http(1146148)
+all_contributions = filing3['itemizations']['Schedule B']
+mid_size_contributions = [item for item in all_contributions if 500 <= item[contribution_amount] < 1000]
+print(len(mid_size_contributions))
 
 with open('1229017.fec') as file:
     parsed = fecfile.loads(file.read())
-    print(json.dumps(parsed, sort_keys=True, indent=2, default=str))
+    num_disbursements = len(parsed['itemizations']['Schedule B'])
+    print(num_disbursements)
 
 url = 'http://docquery.fec.gov/dcdev/posted/1229017.fec'
 r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
 parsed = fecfile.loads(r.text)
-print(json.dumps(parsed, sort_keys=True, indent=2, default=str))
+fecfile.print_example(parsed)
 ```
 
-Note #1: the `default=str` parameter allows serializing to json for dictionaries like the ones returned by the `fecfile` library that contain `datetime` objects.
-
-Note #2: the docquery.fec.gov urls cause problems with the requests library when a user-agent is not supplied. There may be a cleaner fix to that though.
+Note: the docquery.fec.gov urls cause problems with the requests library when a user-agent is not supplied. There may be a cleaner fix to that though.
 
 ## Advanced Usage
 
-For some large filings, loading the entire filing into memory like the above examples do would not be a good idea. For those cases, the `fecfile` library provides methods for parsing filings one line at a time.
+For some large filings, loading the entire filing into memory like the above examples do would not be a good idea. For those cases, the `fecfile` library provides the `iter_file` and `iter_http` methods. Both are generator functions that yield `FecItem` objects, which consist of `data` and `data_type` attributes. The data_type attribute can be one of "header", "summary", "itemization", "text", or "F99_text". The data attribute is a dictionary for all data types except for "F99_text", for which it is a string.
+
+```
+import fecfile
+import imaginary_database
+
+# sometimes we only care about summary data, but want to be able to handle all filings, without
+# knowing anything about them before we attempt to parse.
+no_itemizations = {'filter_itemizations': []}
+for i in range(1300000, 1320000):
+    for item in fecfile.iter_http(i, options=no_itemizations):
+        if item.data_type == 'summary':
+            imaginary_database.add_to_db(item.data)
+
+# Sometimes we only care about one type of itemization, but from a very large filing.
+# In this example, we add up all the contributions from Delaware in ActBlue's 2018
+# post-general filing
+only_contributions = {'filter_itemizations': ['SA']}
+de_total = 0
+for item in fecfile.iter_http(1300352, options=only_contributions):
+    if item.data_type == 'itemization':
+        if item.data['contributor_state'] == 'DE':
+            de_total += item.data['contribution_amount']
+print(de_total)
+
+# Sometimes we want to maintain a database where different types of itemizations live in their own
+# tables and have foreign key relationships to a summary record.
+file_path = '/path/to/99840.fec'
+filing = None
+for item in fecfile.iter_file(file_path):
+    if item.data_type == 'summary':
+        filing = imaginary_database.add_filing(file_number=99840, **item.data)
+    if item.data_type == 'itemization':
+        if item.data['form_type'].startswith('SA'):
+            imaginary_database.add_contribution(filing=filing, **item.data)
+        if item.data['form_type'].startswith('SB'):
+            imaginary_database.add_disbursement(filing=filing, **item.data)
+        if item.data['form_type'].startswith('SC'):
+            imaginary_database.add_loan(filing=filing, **item.data)
+```
+
+You can also choose to use the `parse_header` and `parse_line` methods if you are implementing a different method of
+iterating over a filing's content. Before version 0.6, the below example was the only way to use `fecfile` to parse
+filings without loading the entire filing into memory. This approach should no longer be necessary, but is kept to
+show how example usage for those methods.
 
 ```
 import fecfile
@@ -146,6 +193,26 @@ a ``str`` of the path to the file, and returns the parsed Python object.
 See [above](#fecfile.loads) for how documentation on how to use the optional
 ``options`` argument.
 
+<h3 id="fecfile.iter_http">iter_http</h3>
+
+```
+iter_http(file_number, options={})
+```
+Makes an http request for the given `file_number` and iterates over the response, yielding `FecItem` instances, which consist of `data` and `data_type` attributes. The `data_type` attribute can be one of "header", "summary", "itemization", "text", or "F99_text". The `data` attribute is a dictionary for all data types except for "F99_text", for which it is a string. This method avoids loading the entire filing into memory, as the `from_http` method does.
+
+See [above](#fecfile.loads) for how documentation on how to use the optional
+``options`` argument.
+
+<h3 id="fecfile.iter_file">iter_file</h3>
+
+```
+iter_file(file_path, options={})
+```
+Opens a file at the given `file_path` and iterates over its contents, yielding `FecItem` instances, which consist of `data` and `data_type` attributes. The `data_type` attribute can be one of "header", "summary", "itemization", "text", or "F99_text". The `data` attribute is a dictionary for all data types except for "F99_text", for which it is a string. This method avoids loading the entire filing into memory, as the `from_file` method does.
+
+See [above](#fecfile.loads) for how documentation on how to use the optional
+``options`` argument.
+
 <h3 id="fecfile.print_example">print_example</h3>
 
 ```
@@ -205,6 +272,10 @@ Almost too much to list:
 - elegantly handle errors
 
 ## Changes
+
+### 0.6.0 (April 10, 2019)
+- add iter_http and iter_file functions, using a shared iter_lines function
+- refactor loads to use the new generator functions for performance
 
 ### 0.5.3 (February 12, 2019)
 - handle trailing whitespace in form_type field

@@ -58,15 +58,16 @@ def from_http(file_number, options={}):
     the ``docquery.fec.gov`` server, then parses the response.
     """
     url = 'http://docquery.fec.gov/dcdev/posted/{n}.fec'.format(n=file_number)
-    r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+    req_headers = {'User-Agent': 'Mozilla/5.0'}
+    r = requests.get(url, headers=req_headers, stream=True)
     if r.status_code == 404:
         url = 'http://docquery.fec.gov/paper/posted/{n}.fec'.format(
             n=file_number
         )
-        r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+        r = requests.get(url, headers=req_headers, stream=True)
     if r.status_code == 404:
         return None
-    return fecparser.loads(r.text, options=options)
+    return fecparser.loads(r.iter_lines(), options=options)
 
 
 def from_file(file_path, options={}):
@@ -90,3 +91,39 @@ def print_example(parsed):
     itemization included in the object.
     """
     fecparser.print_example(parsed)
+
+
+def iter_http(file_number, options={}):
+    """Makes an http request for the given file_number and iterates over
+    the response, yielding FecItem instances, which consist of data and
+    data_type attributes. The data_type attribute can be one of "header",
+    "summary", "itemization", "text", or "F99_text". The data attribute is a
+    dictionary for all data types except for "F99_text", for which it is a
+    string. This method avoids loading the entire filing into memory, as the
+    from_http method does.
+    """
+    url = 'http://docquery.fec.gov/dcdev/posted/{n}.fec'.format(n=file_number)
+    req_headers = {'User-Agent': 'Mozilla/5.0'}
+    r = requests.get(url, headers=req_headers, stream=True)
+    if r.status_code == 404:
+        url = 'http://docquery.fec.gov/paper/posted/{n}.fec'.format(
+            n=file_number
+        )
+        r = requests.get(url, headers=req_headers, stream=True)
+    if r.status_code == 200:
+        for item in fecparser.iter_lines(r.iter_lines(), options=options):
+            yield item
+
+
+def iter_file(file_path, options={}):
+    """Opens a file at the given file_path and iterates over its
+    contents, yielding FecItem instances, which consist of data and
+    data_type attributes. The data_type attribute can be one of "header",
+    "summary", "itemization", "text", or "F99_text". The data attribute is a
+    dictionary for all data types except for "F99_text", for which it is a
+    string. This method avoids loading the entire filing into memory, as the
+    from_file method does.
+    """
+    with open(file_path, 'r') as file:
+        for item in fecparser.iter_lines(file, options=options):
+            yield item
