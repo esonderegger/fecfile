@@ -13,6 +13,12 @@ class FecParserTypeWarning(UserWarning):
     pass
 
 
+class FecItem:
+    def __init__(self, data_type, data):
+        self.data_type = data_type
+        self.data = data
+
+
 this_file = os.path.abspath(__file__)
 this_dir = os.path.dirname(this_file)
 mappings_file = os.path.join(this_dir, 'mappings.json')
@@ -37,44 +43,72 @@ def include_line(line, filter_list):
 
 
 def loads(input, options={}):
-    version = None
-    lines = input.split('\n')
     out = {'itemizations': {}, 'text': [], 'header': {}, 'filing': {}}
-    out['header'], version, header_length = parse_header(lines)
-    text_section = False
-    for i in range(header_length, len(lines)):
-        line = lines[i]
-        if i > header_length and 'filter_itemizations' in options:
-            if not include_line(line, options['filter_itemizations']):
-                continue
-        stripped_line = line.strip().upper()
-        if stripped_line == '[BEGINTEXT]' or stripped_line == '[BEGIN TEXT]':
-            text_section = True
-            continue
-        if stripped_line == '[ENDTEXT]' or stripped_line == '[END TEXT]':
-            text_section = False
-            continue
-        if text_section:
-            if 'F99_text' in out:
-                out['F99_text'] += '\n' + line
+    iterable_input = input.split('\n') if type(input) is str else input
+    for item in iter_lines(iterable_input, options=options):
+        if item.data_type == 'header':
+            out['header'] = item.data
+        if item.data_type == 'summary':
+            out['filing'] = item.data
+        if item.data_type == 'F99_text':
+            out['F99_text'] = item.data
+        if item.data_type == 'text':
+            out['text'].append(item.data)
+        if item.data_type == 'itemization':
+            form_type = item.data['form_type']
+            if form_type[0] == 'S':
+                form_type = 'Schedule ' + item.data['form_type'][1]
+            if form_type in out['itemizations']:
+                out['itemizations'][form_type].append(item.data)
             else:
-                out['F99_text'] = line
-            continue
-        parsed = parse_line(line, version, i)
-        if i < header_length + 1:
-            out['filing'] = parsed
-        elif parsed:
-            if 'form_type' in parsed:
-                form_type = parsed['form_type']
-                if form_type[0] == 'S':
-                    form_type = 'Schedule ' + parsed['form_type'][1]
-                if form_type in out['itemizations']:
-                    out['itemizations'][form_type].append(parsed)
-                else:
-                    out['itemizations'][form_type] = [parsed]
-            else:
-                out['text'].append(parsed)
+                out['itemizations'][form_type] = [item.data]
     return out
+
+
+def iter_lines(lines, options):
+    version = None
+    current_line_num = 0
+    header_lines = []
+    text_section = False
+    f99_text = ''
+    summary = False
+    for line_unk in lines:
+        current_line_num += 1
+        line = line_unk if type(line_unk) is str else line_unk.decode('utf-8')
+        if version is None:
+            header_lines.append(line)
+            header, version, header_length = parse_header(header_lines)
+            if header is not None:
+                yield FecItem('header', header)
+        else:
+            if summary and 'filter_itemizations' in options:
+                if not include_line(line, options['filter_itemizations']):
+                    continue
+            stripped = line.strip().upper()
+            if stripped == '[BEGINTEXT]' or stripped == '[BEGIN TEXT]':
+                text_section = True
+                continue
+            if stripped == '[ENDTEXT]' or stripped == '[END TEXT]':
+                text_section = False
+                yield FecItem('F99_text', f99_text)
+                continue
+            if text_section:
+                if f99_text == '':
+                    f99_text = line
+                else:
+                    f99_text += '\n' + line
+                continue
+            parsed = parse_line(line, version, current_line_num)
+            if parsed is None:
+                continue
+            if summary:
+                if 'form_type' in parsed:
+                    yield FecItem('itemization', parsed)
+                else:
+                    yield FecItem('text', parsed)
+            else:
+                summary = True
+                yield FecItem('summary', parsed)
 
 
 def fields_from_line(line, use_ascii_28=False):
@@ -97,6 +131,8 @@ def parse_header(lines):
         header_size = 1
         header = {'schedule_counts': {}}
         schedule_counts = False
+        if header_size >= len(lines):
+            return None, None, None
         while not lines[header_size].startswith('/*'):
             this_line = lines[header_size]
             if this_line.lower().startswith('schedule_counts'):
@@ -110,6 +146,8 @@ def parse_header(lines):
                 else:
                     header[k] = v
             header_size += 1
+            if header_size >= len(lines):
+                return None, None, None
         return header, header['fec_ver_#'], header_size + 1
     fields = fields_from_line(lines[0])
     if fields[1] == 'FEC':

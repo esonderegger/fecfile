@@ -111,6 +111,18 @@ class HandleNANumber(unittest.TestCase):
         self.assertEqual(loan_itemization['loan_interest_rate_terms'], 'N/A')
 
 
+class F99Filing(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1090014)
+        self.assertEqual(parsed['header']['fec_version'], '8.1')
+        self.assertEqual(
+            parsed['filing']['committee_name'],
+            'KENT FOR CONGRESS',
+        )
+        expected = 'Termination of Campaign. Did not exceed $5000 threshold.'
+        self.assertEqual(parsed['F99_text'], expected)
+
+
 class ConvertZipFileToJSON(unittest.TestCase):
     def test_convert(self):
         date_str = '20180616'
@@ -289,6 +301,34 @@ class OptionsFilterItemizations(unittest.TestCase):
         self.assertNotIn('Schedule A', parsed['itemizations'])
 
 
+class ParseHttpIterator(unittest.TestCase):
+    def test_parse(self):
+        file_num = 1000
+        a_filter = {'filter_itemizations': ['SB']}
+        items = fecfile.iter_http(file_num, options=a_filter)
+        num_itemizations = 0
+        for item in items:
+            if item.data_type == 'summary':
+                self.assertEqual(item.data['report_code'], '12G')
+            if item.data_type == 'itemization':
+                num_itemizations += 1
+        self.assertEqual(num_itemizations, 48)
+
+
+class ParseFileIterator(unittest.TestCase):
+    def test_parse(self):
+        file_path = 'test-data/1229017.fec'
+        a_filter = {'filter_itemizations': ['SA']}
+        items = fecfile.iter_file(file_path, options=a_filter)
+        num_itemizations = 0
+        for item in items:
+            if item.data_type == 'summary':
+                self.assertEqual(item.data['report_code'], '12P')
+            if item.data_type == 'itemization':
+                num_itemizations += 1
+        self.assertEqual(num_itemizations, 186)
+
+
 class AllFormsHaveMappings(unittest.TestCase):
     def test_request(self):
         missing_mappings = {}
@@ -323,6 +363,7 @@ if __name__ == '__main__':
         HandleSpaceInFormType('test_request'),
         HandlePercentInNumber('test_request'),
         HandleNANumber('test_request'),
+        F99Filing('test_request'),
         ConvertZipFileToJSON('test_convert'),
         SenatePaperFiling('test_request'),
         CanParsePaperF3Z('test_request'),
@@ -338,6 +379,8 @@ if __name__ == '__main__':
         V1Filing('test_request'),
         Windows1252Encoding('test_read'),
         OptionsFilterItemizations('test_read'),
+        ParseHttpIterator('test_parse'),
+        ParseFileIterator('test_parse'),
     ])
     mappings_test = unittest.TestSuite([AllFormsHaveMappings('test_request')])
     if len(sys.argv) > 1 and sys.argv[1] == 'mappings':
