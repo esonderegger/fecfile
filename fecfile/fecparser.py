@@ -65,7 +65,7 @@ def loads(input, options={}):
     return out
 
 
-def iter_lines(lines, options):
+def iter_lines(lines, options={}):
     version = None
     current_line_num = 0
     header_lines = []
@@ -74,7 +74,10 @@ def iter_lines(lines, options):
     summary = False
     for line_unk in lines:
         current_line_num += 1
-        line = line_unk if type(line_unk) is str else line_unk.decode('utf-8')
+        try:
+            line = line_unk if type(line_unk) is str else line_unk.decode('utf-8')
+        except UnicodeDecodeError:
+            line = line_unk.decode('ISO-8859-1')
         if version is None:
             header_lines.append(line)
             header, version, header_length = parse_header(header_lines)
@@ -98,7 +101,8 @@ def iter_lines(lines, options):
                 else:
                     f99_text += '\n' + line
                 continue
-            parsed = parse_line(line, version, current_line_num)
+            as_strings = options.get('as_strings', False)
+            parsed = parse_line(line, version, current_line_num, as_strings)
             if parsed is None:
                 continue
             if summary:
@@ -157,7 +161,7 @@ def parse_header(lines):
     return parsed, fields[1], 1
 
 
-def parse_line(line, version, line_num=None):
+def parse_line(line, version, line_num=None, as_strings=False):
     ascii_separator = True
     if version is None or version[0] in comma_versions:
         ascii_separator = False
@@ -170,7 +174,10 @@ def parse_line(line, version, line_num=None):
     for i in range(len(this_version_mapping)):
         val = fields[i] if i < len(fields) else ''
         k = this_version_mapping[i]
-        out[k] = getTyped(form, version, k, val, line_num)
+        if as_strings:
+            out[k] = val
+        else:
+            out[k] = getTyped(form, version, k, val, line_num)
     return out
 
 

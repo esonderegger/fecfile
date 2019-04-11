@@ -170,6 +170,35 @@ class CanParsePaperF3Z(unittest.TestCase):
         self.assertEqual(f3z[0]['col_a_net_contributions'], 459.75)
 
 
+class CanParseF8(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(245235)
+        self.assertEqual(
+            parsed['filing']['committee_name'],
+            'ELECT KEVIN NESTOR TO CONGRESS COMMITTEE'
+        )
+        self.assertEqual(parsed['filing']['total_assets'], 93.8)
+        f8ii = parsed['itemizations']['F8II']
+        self.assertEqual(len(f8ii), 3)
+        self.assertEqual(f8ii[1]['amount_owed_to'], 40000)
+
+
+class CanParseF10(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(234569)
+        self.assertEqual(
+            parsed['filing']['committee_name'],
+            'COMMITTEE TO ELECT ALAN GRAYSON'
+        )
+        self.assertEqual(
+            parsed['filing']['expenditure_total_cycle_to_date'],
+            430400
+        )
+        f105 = parsed['itemizations']['F105']
+        self.assertEqual(len(f105), 2)
+        self.assertEqual(f105[0]['expenditure_amount'], 5400)
+
+
 class InauguralCommitteeFiling(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(1160672)
@@ -301,6 +330,17 @@ class OptionsFilterItemizations(unittest.TestCase):
         self.assertNotIn('Schedule A', parsed['itemizations'])
 
 
+class AsStringsOption(unittest.TestCase):
+    def test_request(self):
+        parsed = fecfile.from_http(1223458, options={'as_strings': True})
+        filing = parsed['filing']
+        self.assertEqual(filing['committee_name'], 'MARGO FOR CONGRESS')
+        self.assertEqual(filing['col_b_total_receipts'], '29916.00')
+        sched_b = parsed['itemizations']['Schedule B']
+        self.assertEqual(len(sched_b), 5)
+        self.assertEqual(sched_b[0]['expenditure_amount'], '984.00')
+
+
 class ParseHttpIterator(unittest.TestCase):
     def test_parse(self):
         file_num = 1000
@@ -367,6 +407,8 @@ if __name__ == '__main__':
         ConvertZipFileToJSON('test_convert'),
         SenatePaperFiling('test_request'),
         CanParsePaperF3Z('test_request'),
+        # CanParseF8('test_request'),
+        CanParseF10('test_request'),
         InauguralCommitteeFiling('test_request'),
         ElectioneeringFiling('test_request'),
         Form3SFiling('test_request'),
@@ -379,6 +421,7 @@ if __name__ == '__main__':
         V1Filing('test_request'),
         Windows1252Encoding('test_read'),
         OptionsFilterItemizations('test_read'),
+        AsStringsOption('test_request'),
         ParseHttpIterator('test_parse'),
         ParseFileIterator('test_parse'),
     ])

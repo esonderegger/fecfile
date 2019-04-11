@@ -15,6 +15,9 @@ def loads(input, options={}):
     Schedule C and Schedule D itemizations. Also, passing
     {'filter_itemizations': []} to options will result in only the header
     and the filing being parsed and returned.
+    Including {'as_strings': True} in the options dictionary will not attempt
+    to convert values that are normally numeric or datetimes to their native
+    python types and will return dictionaries with all values as strings.
     """
     return fecparser.loads(input, options)
 
