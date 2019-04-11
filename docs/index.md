@@ -280,6 +280,11 @@ Almost too much to list:
 
 ## Changes
 
+### 0.6.1 (April 11, 2019)
+- add mappings and types for F10 and F105
+- add as_strings option to disable typing process
+- raise exception when requests for a given file number do not succeed
+
 ### 0.6.0 (April 10, 2019)
 - add iter_http and iter_file functions, using a shared iter_lines function
 - refactor loads to use the new generator functions for performance
