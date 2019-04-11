@@ -5,6 +5,20 @@ import requests
 FecParserMissingMappingError = cache.FecParserMissingMappingError
 
 
+class FilingUnavailableError(Exception):
+    """when http requests for neither the electronic nor paper version
+    of a filing return a 200 status code. Note: for now we don't
+    differentiate between when a filing is unavailable because
+    the request is returning a 500 error and when it doesn't exist and
+    returns 404 errors for both paper and electronic urls"""
+    def __init__(self, opts, msg=None):
+        if msg is None:
+            msg = ('The requested FEC file number ({}) is unavailable.'.format(
+                opts['file_number']
+            ))
+        super(FilingUnavailableError, self).__init__(msg)
+
+
 def loads(input, options={}):
     """Deserialize ``input`` (a ``str`` instance
     containing an FEC document) to a Python object.
@@ -116,6 +130,8 @@ def iter_http(file_number, options={}):
     if r.status_code == 200:
         for item in fecparser.iter_lines(r.iter_lines(), options=options):
             yield item
+    else:
+        raise FilingUnavailableError({'file_number': file_number})
 
 
 def iter_file(file_path, options={}):
