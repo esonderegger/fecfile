@@ -241,6 +241,31 @@
       }
     }
   },
+  "^f10$": {
+    ".*": {
+      "^expenditure_total_": {
+        "type": "float"
+      },
+      "^previous_expenditure_aggregate": {
+        "type": "float"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "^f105$": {
+    ".*": {
+      "^expenditure_amount": {
+        "type": "float"
+      },
+      "^expenditure_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
   "^sa": {
     ".*": {
       "^contribution_aggregate": {
