@@ -1,5 +1,5 @@
 # fecfile
-a python parser for the .fec file format
+A python parser for the .fec file format
 
 This is a library for converting campaign finance filings stored in the .fec format into native python objects. It maps the comma/ASCII 28 delimited fields to canonical names based on the version the filing uses and then converts the values that are dates and numbers into the appropriate `int`, `float`, or `datetime` objects.
 
@@ -8,10 +8,10 @@ This library is in relatively early testing. I've used it on a couple of project
 ## Why?
 The FEC makes a ton of data available via the "export" links on the main site and the [developer API](https://api.open.fec.gov/developers/). For cases where those data sources are sufficient, they are almost certainly the easiest/best way to go. A few cases where one might need to be digging into raw filings are:
 
-- Getting information from individual itemizations including addresses
+- Getting information from individual itemizations including addresses. (The FEC doesn't include street addresses in bulk downloads.)
 - Getting data as soon as it has been filed, instead of waiting for it to be coded. (The FEC generally codes all filings received by 7pm eastern by 7am the next day. However, that means that a filing received at 11:59pm on Monday wouldn't be available until 7am on Wednesday, for example.)
-- Getting more data than the rate-limit on the developer API would allow
-- Maintaining ones own database with all relevant campaign finance data, perhaps synced with another data source
+- Getting more data than the rate-limit on the developer API would allow.
+- Maintaining one's own database with all relevant campaign finance data, perhaps synced with another data source.
 
 Raw filings can be found by either downloading the [bulk data](https://www.fec.gov/data/advanced/?tab=bulk-data) zip files or from http requests like [this](http://docquery.fec.gov/dcdev/posted/1229017.fec). This library includes helper methods for both.
 
