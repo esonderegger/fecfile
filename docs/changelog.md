@@ -7,6 +7,10 @@ title: A list of changes in each version of fecfile
 
 A list of changes in each version of fecfile
 
+### 0.6.2 (April 24, 2019)
+- add mappings and types for F8, F82, and F83
+- edits to documentation
+
 ### 0.6.1 (April 11, 2019)
 - add mappings and types for F10 and F105
 - add as_strings option to disable typing process
