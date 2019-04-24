@@ -407,7 +407,7 @@ if __name__ == '__main__':
         ConvertZipFileToJSON('test_convert'),
         SenatePaperFiling('test_request'),
         CanParsePaperF3Z('test_request'),
-        # CanParseF8('test_request'),
+        CanParseF8('test_request'),
         CanParseF10('test_request'),
         InauguralCommitteeFiling('test_request'),
         ElectioneeringFiling('test_request'),

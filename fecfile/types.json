@@ -177,6 +177,77 @@
       }
     }
   },
+  "(^f8$)|(^f8[an])": {
+    ".*": {
+      "^cash_on_hand$": {
+        "type": "float"
+      },
+      "^cash_on_hand_as_of_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^total_assets": {
+        "type": "float"
+      },
+      "^receipts_ytd": {
+        "type": "float"
+      },
+      "^disbursements_ytd": {
+        "type": "float"
+      },
+      "^total_debts_owed": {
+        "type": "float"
+      },
+      "^total_num_creditors_owed": {
+        "type": "float"
+      },
+      "^num_creditors_part_ii": {
+        "type": "float"
+      },
+      "^total_debts_owed_part_ii": {
+        "type": "float"
+      },
+      "^total_to_be_paid_to_creditors": {
+        "type": "float"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "^f8ii$": {
+    ".*": {
+      "^date_incurred": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^amount_owed_to": {
+        "type": "float"
+      },
+      "^amount_offered_in": {
+        "type": "float"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      }
+    }
+  },
+  "^f8iii$": {
+    ".*": {
+      "^date_incurred": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^amount_owed_to": {
+        "type": "float"
+      },
+      "^amount_expected_to_pay": {
+        "type": "float"
+      }
+    }
+  },
   "(^f9$)|(^f9[an])": {
     ".*": {
       "^original_amendment_date": {
