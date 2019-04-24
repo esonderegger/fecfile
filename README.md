@@ -151,7 +151,7 @@ header information for an FEC document. Returns an Python object, the
 version ``str`` used in the document, and the number of lines used
 by the header.
 
-The third return value from parse_header-- the number of lines used by the header--is only
+The third return value from parse_header--the number of lines used by the header--is only
 useful for early versions of the FEC file format, typically predating 2001. Versions 1 and 2 of the FEC file format allowed headers to be a multiline string beginning and ending with ``/*``. 
 
 Returning the number of lines in the header allows us to know where the non-header lines begin. 
