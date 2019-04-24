@@ -58,13 +58,15 @@ Note: the docquery.fec.gov urls cause problems with the requests library when a 
 
 ## Advanced Usage
 
-For some large filings, loading the entire filing into memory like the above examples do would not be a good idea. For those cases, the `fecfile` library provides the `iter_file` and `iter_http` methods. Both are generator functions that yield `FecItem` objects, which consist of `data` and `data_type` attributes. The data_type attribute can be one of "header", "summary", "itemization", "text", or "F99_text". The data attribute is a dictionary for all data types except for "F99_text", for which it is a string.
+FEC filings can be arbitrarily large. Loading enormous filings into memory all at once can cause problems (including running out of memory). 
+
+The `fecfile` library exposes the `iter_file` and `iter_http` methods to read large filings one line at a time. Both are generator functions that yield `FecItem` objects, which consist of `data` and `data_type` attributes. The data_type attribute can be one of "header", "summary", "itemization", "text", or "F99_text". The data attribute is a dictionary for all data types except for "F99_text", for which it is a string.
 
 ```
 import fecfile
 import imaginary_database
 
-# sometimes we only care about summary data, but want to be able to handle all filings, without
+# Sometimes we only care about summary data, but want to be able to handle all filings, without
 # knowing anything about them before we attempt to parse.
 no_itemizations = {'filter_itemizations': []}
 for i in range(1300000, 1320000):
@@ -149,11 +151,10 @@ header information for an FEC document. Returns an Python object, the
 version ``str`` used in the document, and the number of lines used
 by the header.
 
-The third return value of number of lines used by the header is only
-useful for versions 1 and 2 of the FEC file format, when the header
-was a multiline string beginning and ending with ``/*``. This allows
-us to pass in the entire contents of the file as a list of lines and
-know where to start parsing the non-header lines.
+The third return value from parse_header-- the number of lines used by the header--is only
+useful for early versions of the FEC file format, typically predating 2001. Versions 1 and 2 of the FEC file format allowed headers to be a multiline string beginning and ending with ``/*``. 
+
+Returning the number of lines in the header allows us to know where the non-header lines begin. 
 
 <h3 id="fecfile.parse_line">parse_line</h3>
 
@@ -168,17 +169,17 @@ to be used, and is required.
 
 ``line_num`` is optional and is used for debugging. If an error or
 warning is encountered, whatever is passed in to ``line_num`` will be
-included in the error/warning message.
+included in the error/warning message. Normally the line number of the input file will be passed in, so that the user is shown the error and the line number in the original file that triggered the error. 
 
 <h3 id="fecfile.from_http">from_http</h3>
 
 ```
 from_http(file_number, options={})
 ```
-Utility method for getting a parsed Python representation of an FEC
-filing when you don't already have it on your computer. This method takes
-either a ``str`` or ``int`` as a ``file_number`` and requests it from
-the ``docquery.fec.gov`` server, then parses the response.
+Utility method for retrieving a parsed Python representation of an FEC
+filing when it is not available as a local file. This method takes
+either a ``str`` or ``int`` as a ``file_number`` and requests the corresponding filing from
+the ``docquery.fec.gov`` server. It returns the parsed response.
 
 See [above](#fecfile.loads) for how documentation on how to use the optional
 ``options`` argument.
@@ -189,7 +190,7 @@ See [above](#fecfile.loads) for how documentation on how to use the optional
 from_file(file_path, options={})
 ```
 Utility method for getting a parsed Python representation of an FEC
-filing when you have the .fec file on your computer. This method takes
+filing that exists as a .fec file on a local machine. This method takes
 a ``str`` of the path to the file, and returns the parsed Python object.
 
 See [above](#fecfile.loads) for how documentation on how to use the optional
