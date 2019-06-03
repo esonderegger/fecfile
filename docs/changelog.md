@@ -7,6 +7,9 @@ title: A list of changes in each version of fecfile
 
 A list of changes in each version of fecfile
 
+### 0.6.3 (June 3, 2019)
+- use https for docquery.fec.gov URLs
+
 ### 0.6.2 (April 24, 2019)
 - add mappings and types for F8, F82, and F83
 - edits to documentation

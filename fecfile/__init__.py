@@ -74,11 +74,11 @@ def from_http(file_number, options={}):
     either a ``str`` or ``int`` as a ``file_number`` and requests it from
     the ``docquery.fec.gov`` server, then parses the response.
     """
-    url = 'http://docquery.fec.gov/dcdev/posted/{n}.fec'.format(n=file_number)
+    url = 'https://docquery.fec.gov/dcdev/posted/{n}.fec'.format(n=file_number)
     req_headers = {'User-Agent': 'Mozilla/5.0'}
     r = requests.get(url, headers=req_headers, stream=True)
     if r.status_code == 404:
-        url = 'http://docquery.fec.gov/paper/posted/{n}.fec'.format(
+        url = 'https://docquery.fec.gov/paper/posted/{n}.fec'.format(
             n=file_number
         )
         r = requests.get(url, headers=req_headers, stream=True)
@@ -119,11 +119,11 @@ def iter_http(file_number, options={}):
     string. This method avoids loading the entire filing into memory, as the
     from_http method does.
     """
-    url = 'http://docquery.fec.gov/dcdev/posted/{n}.fec'.format(n=file_number)
+    url = 'https://docquery.fec.gov/dcdev/posted/{n}.fec'.format(n=file_number)
     req_headers = {'User-Agent': 'Mozilla/5.0'}
     r = requests.get(url, headers=req_headers, stream=True)
     if r.status_code == 404:
-        url = 'http://docquery.fec.gov/paper/posted/{n}.fec'.format(
+        url = 'https://docquery.fec.gov/paper/posted/{n}.fec'.format(
             n=file_number
         )
         r = requests.get(url, headers=req_headers, stream=True)

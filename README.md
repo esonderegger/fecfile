@@ -13,7 +13,7 @@ The FEC makes a ton of data available via the "export" links on the main site an
 - Getting more data than the rate-limit on the developer API would allow.
 - Maintaining one's own database with all relevant campaign finance data, perhaps synced with another data source.
 
-Raw filings can be found by either downloading the [bulk data](https://www.fec.gov/data/advanced/?tab=bulk-data) zip files or from http requests like [this](http://docquery.fec.gov/dcdev/posted/1229017.fec). This library includes helper methods for both.
+Raw filings can be found by either downloading the [bulk data](https://www.fec.gov/data/advanced/?tab=bulk-data) zip files or from http requests like [this](https://docquery.fec.gov/dcdev/posted/1229017.fec). This library includes helper methods for both.
 
 ## Installation
 To get started, install from [pypi](https://pypi.org/project/fecfile/) by running the following command in your preferred terminal:
@@ -48,7 +48,7 @@ with open('1229017.fec') as file:
     num_disbursements = len(parsed['itemizations']['Schedule B'])
     print(num_disbursements)
 
-url = 'http://docquery.fec.gov/dcdev/posted/1229017.fec'
+url = 'https://docquery.fec.gov/dcdev/posted/1229017.fec'
 r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
 parsed = fecfile.loads(r.text)
 fecfile.print_example(parsed)
