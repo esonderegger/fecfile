@@ -393,6 +393,10 @@
         "type": "date",
         "format": "%Y%m%d"
       },
+      "^loan_incurred_date_terms": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
       "^loan_inccured_date_original": {
         "type": "date",
         "format": "%Y%m%d"

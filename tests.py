@@ -63,6 +63,9 @@ class HandleScheduleCDates(unittest.TestCase):
         file_path = 'test-data/1385191.fec'
         parsed = fecfile.from_file(file_path)
 
+        sched_c = parsed['itemizations']['Schedule C'][0]
+        self.assertIsInstance(sched_c['loan_incurred_date_terms'], datetime)
+
         sched_c = parsed['itemizations']['Schedule C'][2]
         self.assertIsInstance(sched_c['loan_incurred_date'], datetime)
         self.assertIsInstance(sched_c['loan_due_date'], datetime)
