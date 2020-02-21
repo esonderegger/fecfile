@@ -58,8 +58,7 @@ class HasScheduleC(unittest.TestCase):
         self.assertEqual(sched_c['loan_balance'], 30000.00)
 
 class HandleScheduleCDates(unittest.TestCase):
-    def test_request(self):
-
+    def test_dates(self):
         file_path = 'test-data/1385191.fec'
         parsed = fecfile.from_file(file_path)
 
@@ -412,7 +411,7 @@ if __name__ == '__main__':
         TextLastRow('test_request'),
         IndependentExpendituresReport('test_request'),
         HasScheduleC('test_request'),
-        HandleScheduleCDates('test_request'),
+        HandleScheduleCDates('test_dates'),
         HasScheduleD('test_request'),
         HasScheduleI('test_request'),
         HandleF1FromWebForms('test_request'),
