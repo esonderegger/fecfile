@@ -61,21 +61,15 @@ class HandleScheduleCDates(unittest.TestCase):
     def test_request(self):
 
         file_path = 'test-data/1385191.fec'
-        a_filter = {'filter_itemizations': ['SB']}
         parsed = fecfile.from_file(file_path)
 
-        sched_c_1 = parsed['itemizations']['Schedule C'][0]
-        self.assertIsInstance(sched_c_1['loan_incurred_date_terms'], datetime)
-        self.assertIsInstance(sched_c_1['loan_due_date_terms'], datetime)
-
-        sched_c_3 = parsed['itemizations']['Schedule C'][2]
-        self.assertIsInstance(sched_c_3['loan_incurred_date'], datetime)
-        self.assertIsInstance(sched_c_3['loan_due_date'], datetime)
-        self.assertIsInstance(sched_c_3['established_date'], datetime)
-        self.assertIsInstance(sched_c_3['date_signed'], datetime)
-        self.assertIsInstance(sched_c_3['authorized_date'], datetime)
-        self.assertIsNone(sched_c_3['loan_inccured_date_original'])
-        self.assertIsNone(sched_c_3['deposit_acct_auth_date_presidential'])
+        sched_c = parsed['itemizations']['Schedule C'][2]
+        self.assertIsInstance(sched_c['loan_incurred_date'], datetime)
+        self.assertIsInstance(sched_c['loan_due_date'], datetime)
+        self.assertIsInstance(sched_c['established_date'], datetime)
+        self.assertIsInstance(sched_c['date_signed'], datetime)
+        self.assertIsInstance(sched_c['authorized_date'], datetime)
+        self.assertIsNone(sched_c['loan_inccured_date_original'])
 
 class HasScheduleD(unittest.TestCase):
     def test_request(self):
