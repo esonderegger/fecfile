@@ -367,11 +367,43 @@
   },
   "^sc": {
     ".*": {
+      "^authorized_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^date_signed": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^deposit_acct_auth_date_presidential": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^established_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
       "^loan_amount_original": {
         "type": "float"
       },
       "^loan_balance": {
         "type": "float"
+      },
+      "^loan_due_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^loan_due_date_terms": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^loan_incurred_date": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
+      "^loan_inccured_date_original": {
+        "type": "date",
+        "format": "%Y%m%d"
       },
       "^loan_incurred_date_terms": {
         "type": "date",
