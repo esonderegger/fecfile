@@ -72,7 +72,7 @@ class HandleScheduleCDates(unittest.TestCase):
         self.assertIsInstance(sched_c['date_signed'], datetime)
         self.assertIsInstance(sched_c['authorized_date'], datetime)
         self.assertIsNone(sched_c['deposit_acct_auth_date_presidential'])
-        self.assertIsNone(sched_c['loan_inccured_date_original'])
+        self.assertIsNone(sched_c['loan_incurred_date_original'])
 
 class HasScheduleD(unittest.TestCase):
     def test_request(self):
