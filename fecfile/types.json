@@ -375,6 +375,10 @@
         "type": "date",
         "format": "%Y%m%d"
       },
+      "^deposit_acct_auth_date_presidential": {
+        "type": "date",
+        "format": "%Y%m%d"
+      },
       "^established_date": {
         "type": "date",
         "format": "%Y%m%d"
@@ -384,10 +388,6 @@
       },
       "^loan_balance": {
         "type": "float"
-      },
-      "^loan_due_date$": {
-        "type": "date",
-        "format": "%Y%m%d"
       },
       "^loan_incurred_date": {
         "type": "date",

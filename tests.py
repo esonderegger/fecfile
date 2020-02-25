@@ -67,10 +67,11 @@ class HandleScheduleCDates(unittest.TestCase):
 
         sched_c = parsed['itemizations']['Schedule C'][2]
         self.assertIsInstance(sched_c['loan_incurred_date'], datetime)
-        self.assertIsInstance(sched_c['loan_due_date'], datetime)
+        self.assertIsInstance(sched_c['loan_due_date'], str)
         self.assertIsInstance(sched_c['established_date'], datetime)
         self.assertIsInstance(sched_c['date_signed'], datetime)
         self.assertIsInstance(sched_c['authorized_date'], datetime)
+        self.assertIsNone(sched_c['deposit_acct_auth_date_presidential'])
         self.assertIsNone(sched_c['loan_inccured_date_original'])
 
 class HasScheduleD(unittest.TestCase):
