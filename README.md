@@ -246,7 +246,7 @@ source ~/.virtualenvs/fecfile/bin/activate
 Next, install the dependencies:
 
 ```
-python setup.py
+python setup.py install
 ```
 
 Finally, make some changes, and run:
