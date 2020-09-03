@@ -13,8 +13,9 @@ class FilingUnavailableError(Exception):
     returns 404 errors for both paper and electronic urls"""
     def __init__(self, opts, msg=None):
         if msg is None:
-            msg = ('The requested FEC file number ({}) is unavailable.'.format(
-                opts['file_number']
+            msg = ('The requested FEC file number ({}) is unavailable. Status code {}.'.format(
+                opts['file_number'],
+                opts['status_code']
             ))
         super(FilingUnavailableError, self).__init__(msg)
 
@@ -131,7 +132,7 @@ def iter_http(file_number, options={}):
         for item in fecparser.iter_lines(r.iter_lines(), options=options):
             yield item
     else:
-        raise FilingUnavailableError({'file_number': file_number})
+        raise FilingUnavailableError({'file_number': file_number, 'status_code': r.status_code})
 
 
 def iter_file(file_path, options={}):
