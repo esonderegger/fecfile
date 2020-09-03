@@ -57,6 +57,22 @@ class HasScheduleC(unittest.TestCase):
         sched_c = parsed['itemizations']['Schedule C'][0]
         self.assertEqual(sched_c['loan_balance'], 30000.00)
 
+class HandleScheduleCDates(unittest.TestCase):
+    def test_dates(self):
+        file_path = 'test-data/1385191.fec'
+        parsed = fecfile.from_file(file_path)
+
+        sched_c = parsed['itemizations']['Schedule C'][0]
+        self.assertIsInstance(sched_c['loan_incurred_date_terms'], datetime)
+
+        sched_c = parsed['itemizations']['Schedule C'][2]
+        self.assertIsInstance(sched_c['loan_incurred_date'], datetime)
+        self.assertIsInstance(sched_c['loan_due_date'], str)
+        self.assertIsInstance(sched_c['established_date'], datetime)
+        self.assertIsInstance(sched_c['date_signed'], datetime)
+        self.assertIsInstance(sched_c['authorized_date'], datetime)
+        self.assertIsNone(sched_c['deposit_acct_auth_date_presidential'])
+        self.assertIsNone(sched_c['loan_incurred_date_original'])
 
 class HasScheduleD(unittest.TestCase):
     def test_request(self):
@@ -396,6 +412,7 @@ if __name__ == '__main__':
         TextLastRow('test_request'),
         IndependentExpendituresReport('test_request'),
         HasScheduleC('test_request'),
+        HandleScheduleCDates('test_dates'),
         HasScheduleD('test_request'),
         HasScheduleI('test_request'),
         HandleF1FromWebForms('test_request'),
