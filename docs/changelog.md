@@ -7,6 +7,10 @@ title: A list of changes in each version of fecfile
 
 A list of changes in each version of fecfile
 
+### 0.6.4 (September 3, 2020)
+- add date types to schedule C
+- include status code with error from `iter_http`
+
 ### 0.6.3 (June 3, 2019)
 - use https for docquery.fec.gov URLs
 
