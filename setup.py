@@ -30,7 +30,6 @@ setup(
         'Source Code': 'https://github.com/washingtonpost/fecfile/',
     },
     author=AUTHOR,
-    author_email='evan@rpy.xyz',
     license='Apache License 2.0',
     keywords='fec campaign finance politics',
     classifiers=[
