@@ -4,7 +4,6 @@ import re
 MAPPING_CACHE_KEY = "%s:%s"
 MAPPING_CACHE = {}
 
-TYPE_CACHE_KEY = "%s:%s:%s"
 TYPE_CACHE = {}
 
 
@@ -39,12 +38,12 @@ def getMapping_from_regex(mappings, form, version):
 
 def getMapping(mappings, form, version):
     """ Tries to find the mapping from cache before looking it up w regex """
-    key = MAPPING_CACHE_KEY % (form, version)
-    try:
-        mapping = MAPPING_CACHE[key]
-    except KeyError:
-        mapping = getMapping_from_regex(mappings, form, version)
-        MAPPING_CACHE[key] = mapping
+    key = (form, version)
+    if key in MAPPING_CACHE:
+        return MAPPING_CACHE[key]
+
+    mapping = getMapping_from_regex(mappings, form, version)
+    MAPPING_CACHE[key] = mapping
     return mapping
 
 
