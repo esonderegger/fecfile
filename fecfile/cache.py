@@ -10,6 +10,7 @@ TYPE_CACHE = {}
 
 class FecParserMissingMappingError(Exception):
     """when a line in an FEC filing doesn't have a form/version mapping"""
+
     def __init__(self, opts, msg=None):
         if msg is None:
             msg = ('cannot parse version {v} of form {f} - '
@@ -65,10 +66,9 @@ def getTypeMapping_from_regex(types, form, version, field):
 
 def getTypeMapping(types, form, version, field):
     """ caches the mapping to dict """
-    key = TYPE_CACHE_KEY % (form, version, field)
-    try:
-        mapping = TYPE_CACHE[key]
-    except KeyError:
-        mapping = getTypeMapping_from_regex(types, form, version, field)
-        TYPE_CACHE[key] = mapping
+    key = (form, version, field)
+    if key in TYPE_CACHE:
+        return TYPE_CACHE[key]
+    mapping = getTypeMapping_from_regex(types, form, version, field)
+    TYPE_CACHE[key] = mapping
     return mapping
