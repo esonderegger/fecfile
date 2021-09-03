@@ -139,7 +139,7 @@ Schedule C and Schedule D itemizations. Also, passing
 ``{'filter_itemizations': []}`` to ``options`` will result in only the header
 and the filing being parsed and returned.
 
-Including `{'as_strings': True}` in the `options` dictionary will not attempt to convert values that are normally numeric or datetimes to their native python types and will return dictionaries with all values as strings.
+Including `{'as_strings': True}` in the `options` dictionary will not attempt to convert values that are normally numeric or datetimes to their native python types and will return dictionaries with all values as strings. Including `{'simple_conversion': True}` will bypass int conversion and convert datetimes to strings that look like `YYYY-MM-DD` (from `YYYYMMDD`), which speeds up conversion significantly.
 
 <h3 id="fecfile.parse_header">parse_header</h3>
 
