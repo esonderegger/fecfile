@@ -41,7 +41,6 @@ def getMapping(mappings, form, version):
     key = (form, version)
     if key in MAPPING_CACHE:
         return MAPPING_CACHE[key]
-
     mapping = getMapping_from_regex(mappings, form, version)
     MAPPING_CACHE[key] = mapping
     return mapping
