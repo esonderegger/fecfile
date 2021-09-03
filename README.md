@@ -1,5 +1,5 @@
 # fecfile
-A python parser for the .fec file format
+A python parser for the .fec file format. It is a fork of `fecfile`, originally written by Evan Sonderegger and currently maintained by the newsroom engineering team of The Washington Post.
 
 This is a library for converting campaign finance filings stored in the .fec format into native python objects. It maps the comma/ASCII 28 delimited fields to canonical names based on the version the filing uses and then converts the values that are dates and numbers into the appropriate `int`, `float`, or `datetime` objects.
 
