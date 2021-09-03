@@ -7,8 +7,6 @@ import warnings
 
 from .cache import getTypeMapping, getMapping
 
-COLUMN_SEPARATOR = chr(0x1c)
-
 
 class FecParserTypeWarning(UserWarning):
     """when data in an FEC filing doesn't match types.json"""
@@ -77,8 +75,7 @@ def iter_lines(lines, options={}):
     for line_unk in lines:
         current_line_num += 1
         try:
-            line = line_unk if type(
-                line_unk) is str else line_unk.decode('utf-8')
+            line = line_unk if type(line_unk) is str else line_unk.decode('utf-8')
         except UnicodeDecodeError:
             line = line_unk.decode('ISO-8859-1')
         if version is None:
@@ -105,8 +102,7 @@ def iter_lines(lines, options={}):
                     f99_text += '\n' + line
                 continue
             as_strings = options.get('as_strings', False)
-            simple_conversion = options.get('simple_conversion', False)
-            parsed = parse_line(line, version, current_line_num, as_strings, simple_conversion)
+            parsed = parse_line(line, version, current_line_num, as_strings)
             if parsed is None:
                 continue
             if summary:
@@ -120,14 +116,15 @@ def iter_lines(lines, options={}):
 
 
 def fields_from_line(line, use_ascii_28=False):
-    if (COLUMN_SEPARATOR in line) or use_ascii_28:
-        fields = line.split(COLUMN_SEPARATOR)
+    if (chr(0x1c) in line) or use_ascii_28:
+        fields = line.split(chr(0x1c))
     else:
         reader = csv.reader([line])
         fields = next(reader)
-    for field in fields:
+    for i, field in enumerate(fields):
+        # Unquote quoted fields
         if field and field[0] == '"' and field[-1] == '"':
-            field = field[1:-1]
+            fields[i] = field[1:-1]
     return fields
 
 
@@ -162,7 +159,7 @@ def parse_header(lines):
     return parsed, fields[1], 1
 
 
-def parse_line(line, version, line_num=None, as_strings=False, simple_conversion=False):
+def parse_line(line, version, line_num=None, as_strings=False):
     ascii_separator = True
     if version is None or version[0] in comma_versions:
         ascii_separator = False
@@ -178,23 +175,18 @@ def parse_line(line, version, line_num=None, as_strings=False, simple_conversion
         if as_strings:
             out[k] = val
         else:
-            out[k] = getTyped(form, version, k, val, line_num, simple_conversion)
+            out[k] = getTyped(form, version, k, val, line_num)
     return out
 
 
-nones = set(['none', 'n/a'])
+nones = ['none', 'n/a']
 
 
-def getTyped(form, version, field, value, line_num, simple_conversion=False):
-    # If simple_conversion is True, don't convert integers (which should have
-    # same string representation) and convert dates (which always look like
-    # YYYYMMDD) into strings that look like YYYY-MM-DD
+def getTyped(form, version, field, value, line_num):
     prop = getTypeMapping(types, form, version, field)
     if prop:
         try:
             if prop['type'] == 'integer':
-                if simple_conversion:
-                    return value
                 return int(value)
             if prop['type'] == 'float':
                 stripped = value.strip()
@@ -203,15 +195,10 @@ def getTyped(form, version, field, value, line_num, simple_conversion=False):
                 sanitized = stripped.replace('%', '')
                 return float(sanitized)
             if prop['type'] == 'date':
+                format = prop['format']
                 stripped = value.strip()
                 if stripped == '':
                     return None
-
-                if simple_conversion:
-                    # Add hyphens to the date
-                    return stripped[0:4] + '-' + stripped[4:6] + '-' + stripped[6:8]
-
-                format = prop["format"]
                 parsed_date = datetime.strptime(
                     stripped,
                     format)
