@@ -7,6 +7,7 @@ import warnings
 
 from .cache import getTypeMapping, getMapping
 
+COLUMN_SEPARATOR = chr(0x1c)
 
 class FecParserTypeWarning(UserWarning):
     """when data in an FEC filing doesn't match types.json"""
@@ -116,8 +117,8 @@ def iter_lines(lines, options={}):
 
 
 def fields_from_line(line, use_ascii_28=False):
-    if (chr(0x1c) in line) or use_ascii_28:
-        fields = line.split(chr(0x1c))
+    if (COLUMN_SEPARATOR in line) or use_ascii_28:
+        fields = line.split(COLUMN_SEPARATOR)
     else:
         reader = csv.reader([line])
         fields = next(reader)

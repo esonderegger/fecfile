@@ -18,7 +18,7 @@ Raw filings can be found by either downloading the [bulk data](https://www.fec.g
 ## Installation
 To get started, install from [pypi](https://pypi.org/project/fecfile/) by running the following command in your preferred terminal:
 
-```
+```shell
 pip install fecfile
 ```
 
@@ -29,7 +29,7 @@ These methods will return a Python dictionary, with keys for `header`, `filing`,
 
 ### Examples:
 
-```
+```python
 import fecfile
 
 filing1 = fecfile.from_file('1229017.fec')
@@ -62,7 +62,7 @@ FEC filings can be arbitrarily large. Loading enormous filings into memory all a
 
 The `fecfile` library exposes the `iter_file` and `iter_http` methods to read large filings one line at a time. Both are generator functions that yield `FecItem` objects, which consist of `data` and `data_type` attributes. The data_type attribute can be one of "header", "summary", "itemization", "text", or "F99_text". The data attribute is a dictionary for all data types except for "F99_text", for which it is a string.
 
-```
+```python
 import fecfile
 import imaginary_database
 
@@ -106,7 +106,7 @@ iterating over a filing's content. Before version 0.6, the below example was the
 filings without loading the entire filing into memory. This approach should no longer be necessary, but is kept to
 show how example usage for those methods.
 
-```
+```python
 import fecfile
 
 version = None
@@ -125,7 +125,7 @@ with open('1263179.fec') as file:
 
 <h3 id="fecfile.loads">loads</h3>
 
-```
+```python
 loads(input, options={})
 ```
 Deserialize ``input`` (a ``str`` instance
@@ -143,7 +143,7 @@ Including `{'as_strings': True}` in the `options` dictionary will not attempt to
 
 <h3 id="fecfile.parse_header">parse_header</h3>
 
-```
+```python
 parse_header(hdr)
 ```
 Deserialize a ``str`` or a list of ``str`` instances containing
@@ -152,13 +152,13 @@ version ``str`` used in the document, and the number of lines used
 by the header.
 
 The third return value from parse_header--the number of lines used by the header--is only
-useful for early versions of the FEC file format, typically predating 2001. Versions 1 and 2 of the FEC file format allowed headers to be a multiline string beginning and ending with ``/*``. 
+useful for early versions of the FEC file format, typically predating 2001. Versions 1 and 2 of the FEC file format allowed headers to be a multiline string beginning and ending with ``/*``.
 
-Returning the number of lines in the header allows us to know where the non-header lines begin. 
+Returning the number of lines in the header allows us to know where the non-header lines begin.
 
 <h3 id="fecfile.parse_line">parse_line</h3>
 
-```
+```python
 parse_line(line, version, line_num=None)
 ```
 Deserialize a ``line`` (a ``str`` instance
@@ -169,11 +169,11 @@ to be used, and is required.
 
 ``line_num`` is optional and is used for debugging. If an error or
 warning is encountered, whatever is passed in to ``line_num`` will be
-included in the error/warning message. Normally the line number of the input file will be passed in, so that the user is shown the error and the line number in the original file that triggered the error. 
+included in the error/warning message. Normally the line number of the input file will be passed in, so that the user is shown the error and the line number in the original file that triggered the error.
 
 <h3 id="fecfile.from_http">from_http</h3>
 
-```
+```python
 from_http(file_number, options={})
 ```
 Utility method for retrieving a parsed Python representation of an FEC
@@ -186,7 +186,7 @@ See [above](#fecfile.loads) for how documentation on how to use the optional
 
 <h3 id="fecfile.from_file">from_file</h3>
 
-```
+```python
 from_file(file_path, options={})
 ```
 Utility method for getting a parsed Python representation of an FEC
@@ -198,7 +198,7 @@ See [above](#fecfile.loads) for how documentation on how to use the optional
 
 <h3 id="fecfile.iter_http">iter_http</h3>
 
-```
+```python
 iter_http(file_number, options={})
 ```
 Makes an http request for the given `file_number` and iterates over the response, yielding `FecItem` instances, which consist of `data` and `data_type` attributes. The `data_type` attribute can be one of "header", "summary", "itemization", "text", or "F99_text". The `data` attribute is a dictionary for all data types except for "F99_text", for which it is a string. This method avoids loading the entire filing into memory, as the `from_http` method does.
@@ -208,7 +208,7 @@ See [above](#fecfile.loads) for how documentation on how to use the optional
 
 <h3 id="fecfile.iter_file">iter_file</h3>
 
-```
+```python
 iter_file(file_path, options={})
 ```
 Opens a file at the given `file_path` and iterates over its contents, yielding `FecItem` instances, which consist of `data` and `data_type` attributes. The `data_type` attribute can be one of "header", "summary", "itemization", "text", or "F99_text". The `data` attribute is a dictionary for all data types except for "F99_text", for which it is a string. This method avoids loading the entire filing into memory, as the `from_file` method does.
@@ -218,7 +218,7 @@ See [above](#fecfile.loads) for how documentation on how to use the optional
 
 <h3 id="fecfile.print_example">print_example</h3>
 
-```
+```python
 print_example(parsed)
 ```
 Utility method for debugging - prints out a representative subset of
@@ -231,33 +231,37 @@ itemization included in the object.
 
 Assuming you already have Python3 and the ability to create virtual environments installed, first clone this repository from github and cd into it:
 
-```
+```shell
 git clone https://github.com/esonderegger/fecfile.git
 cd fecfile
 ```
 
 Then create a virtual environment for this project (I use the following commands, but there are several ways to get the desired result):
 
-```
-python3 -m venv ~/.virtualenvs/fecfile
-source ~/.virtualenvs/fecfile/bin/activate
+```shell
+python3 -m venv env
+source env/bin/activate
 ```
 
 Next, install the dependencies:
 
-```
+```shell
 python setup.py install
 ```
 
 Finally, make some changes, and run:
 
-```
+```shell
 python tests.py
 ```
 
 ## Thanks
 
 This project would be impossible without the work done by the kind folks at The New York Times [Newsdev team](https://github.com/newsdev). In particular, this project relies heavily on [fech](https://github.com/NYTimes/Fech) although it actually uses a transformation of [this fork](https://github.com/PublicI/fec-parse/blob/master/lib/renderedmaps.js).
+
+Many thanks to [Derek Willis](https://github.com/dwillis) for creating and maintaining [fech-sources](https://github.com/dwillis/fech-sources) which serves as the upstream source of truth for parsing libaries in various languages.
+
+A huge thank you to [Chris Zubak-Skees](https://github.com/chriszs), whose work on the [fec-parse](https://github.com/PublicI/fec-parse) javascript library inspired this project.
 
 Many thanks to [Jacob Fenton](https://github.com/jsfenfen) for writing the caching logic and for providing valuable feedback about the overall design of this library.
 

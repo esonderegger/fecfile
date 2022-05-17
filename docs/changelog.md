@@ -7,6 +7,11 @@ title: A list of changes in each version of fecfile
 
 A list of changes in each version of fecfile
 
+### 0.7.0 (May 17, 2022)
+- add support for version 8.4
+- fix for version 2 of schedule A
+- fix for `UnicodeDecodeError`
+
 ### 0.6.4 (September 3, 2020)
 - add date types to schedule C
 - include status code with error from `iter_http`
