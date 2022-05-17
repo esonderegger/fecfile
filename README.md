@@ -257,7 +257,7 @@ python tests.py
 
 ## Thanks
 
-This project would be impossible without the work done by the kind folks at The New York Times [Newsdev team](https://github.com/newsdev). In particular, this project relies heavily on [fech](https://github.com/NYTimes/Fech) although it actually uses a transformation of [this fork](https://github.com/PublicI/fec-parse/blob/master/lib/renderedmaps.js).
+This project would be impossible without the work done by the kind folks at The New York Times [Newsdev team](https://github.com/newsdev). In particular, this project relies heavily on [fech](https://github.com/NYTimes/Fech).
 
 Many thanks to [Derek Willis](https://github.com/dwillis) for creating and maintaining [fech-sources](https://github.com/dwillis/fech-sources) which serves as the upstream source of truth for parsing libaries in various languages.
 
