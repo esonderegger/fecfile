@@ -144,6 +144,11 @@ def iter_file(file_path, options={}):
     string. This method avoids loading the entire filing into memory, as the
     from_file method does.
     """
-    with open(file_path, 'r') as file:
-        for item in fecparser.iter_lines(file, options=options):
-            yield item
+    try:
+        with open(file_path, 'r') as file:
+            for item in fecparser.iter_lines(file, options=options):
+                yield item
+    except UnicodeDecodeError:
+        with open(file_path, 'r', encoding='ISO-8859-1') as file:
+            for item in fecparser.iter_lines(file, options=options):
+                yield item
