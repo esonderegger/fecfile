@@ -111,7 +111,7 @@ iterating over a filing's content. Before version 0.6, the below example was the
 filings without loading the entire filing into memory. This approach should no longer be necessary, but is kept to
 show how example usage for those methods.
 
-```
+```python
 import fecfile
 
 version = None
@@ -244,8 +244,8 @@ cd fecfile
 Then create a virtual environment for this project (I use the following commands, but there are several ways to get the desired result):
 
 ```shell
-python3 -m venv ~/.virtualenvs/fecfile
-source ~/.virtualenvs/fecfile/bin/activate
+python3 -m venv env
+source env/bin/activate
 ```
 
 Next, install the dependencies:
@@ -263,6 +263,10 @@ python tests.py
 ## Thanks
 
 This project would be impossible without the work done by the kind folks at The New York Times [Newsdev team](https://github.com/newsdev). In particular, this project relies heavily on [fech](https://github.com/NYTimes/Fech) although it actually uses a transformation of [this fork](https://github.com/PublicI/fec-parse/blob/master/lib/renderedmaps.js).
+
+Many thanks to [Derek Willis](https://github.com/dwillis) for creating and maintaining [fech-sources](https://github.com/dwillis/fech-sources) which serves as the upstream source of truth for parsing libaries in various languages.
+
+A huge thank you to [Chris Zubak-Skees](https://github.com/chriszs), whose work on the [fec-parse](https://github.com/PublicI/fec-parse) javascript library inspired this project.
 
 Many thanks to [Jacob Fenton](https://github.com/jsfenfen) for writing the caching logic and for providing valuable feedback about the overall design of this library.
 
