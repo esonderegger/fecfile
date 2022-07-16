@@ -1,6 +1,4 @@
-* **Please check if the PR includes the following**
-- [ ] Tests for the changes have been added (if applicable)
-- [ ] Docs have been added / updated (if applicable)
+(Please feel free to delete this template if it doesn't apply - only use it if it's helpful)
 
 * **What kind of change does this PR introduce?** (Bug fix, feature, docs update, ...)
 
@@ -11,11 +9,3 @@
 
 
 * **What is the new behavior (if this is a feature change)?**
-
-
-
-* **Does this PR introduce a breaking change?** (What changes might users need to make in their application due to this PR?)
-
-
-
-* **Other information**:
