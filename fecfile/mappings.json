@@ -5716,7 +5716,7 @@
       "date_signed",
       "beginning_image_number"
     ],
-    "^(8.3|8.2|8.1)": [
+    "^(8.4|8.3|8.2|8.1)": [
       "form_type",
       "filer_committee_id_number",
       "entity_type",
