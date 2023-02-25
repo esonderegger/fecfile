@@ -7,6 +7,9 @@ title: A list of changes in each version of fecfile
 
 A list of changes in each version of fecfile
 
+### 0.8.0 (February 25, 2023)
+- add some missing mappings from v5 of F3
+
 ### 0.7.2 (July 23, 2022)
 - fix mappings for version 8.4 of F5
 
