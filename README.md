@@ -239,8 +239,8 @@ cd fecfile
 Then create a virtual environment for this project (I use the following commands, but there are several ways to get the desired result):
 
 ```shell
-python3 -m venv env
-source env/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
 
 Next, install the dependencies:
