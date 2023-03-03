@@ -31,24 +31,25 @@ These methods will return a Python dictionary, with keys for `header`, `filing`,
 
 ```python
 import fecfile
+import requests
 
-filing1 = fecfile.from_file('1229017.fec')
+filing1 = fecfile.from_file('1690664.fec')
 print('${:,.2f}'.format(filing1['filing']['col_a_total_receipts']))
 
-filing2 = fecfile.from_http(1146148)
+filing2 = fecfile.from_http(1690664)
 print(filing2['filing']['committee_name'])
 
-filing3 = fecfile.from_http(1146148)
-all_contributions = filing3['itemizations']['Schedule B']
-mid_size_contributions = [item for item in all_contributions if 500 <= item[contribution_amount] < 1000]
+filing3 = fecfile.from_http(1690664)
+all_contributions = filing3['itemizations']['Schedule A']
+mid_size_contributions = [item for item in all_contributions if 500 <= item['contribution_amount'] < 1000]
 print(len(mid_size_contributions))
 
-with open('1229017.fec') as file:
+with open('1690664.fec') as file:
     parsed = fecfile.loads(file.read())
     num_disbursements = len(parsed['itemizations']['Schedule B'])
     print(num_disbursements)
 
-url = 'https://docquery.fec.gov/dcdev/posted/1229017.fec'
+url = 'https://docquery.fec.gov/dcdev/posted/1690664.fec'
 r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
 parsed = fecfile.loads(r.text)
 fecfile.print_example(parsed)
