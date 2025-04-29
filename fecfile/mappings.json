@@ -2937,7 +2937,7 @@
       "date_signed"
     ]
   },
-  "(^f3p$)|(^f3p[^s|3|z])": {
+  "(^f3p$)|(^f3p[^s|3])": {
     "^P3.2|^P3.3|^P3.4": [
       "form_type",
       "filer_committee_id_number",
