@@ -7,6 +7,9 @@ title: A list of changes in each version of fecfile
 
 A list of changes in each version of fecfile
 
+### 0.9.1 (May 3, 2025)
+- Add mappings for F3PZ1 and F3PZ2
+
 ### 0.9.0 (April 23, 2025)
 - add support for version 8.5
 
