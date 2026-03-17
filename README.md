@@ -227,33 +227,25 @@ the Python object returned by one of the deserialization methods. For
 filings with itemizations, it only prints the first of each type of
 itemization included in the object.
 
-
 ## Developing locally
 
-Assuming you already have Python3 and the ability to create virtual environments installed, first clone this repository from github and cd into it:
+Make sure **uv** is installed on your system (see the [installation guide](https://docs.astral.sh/uv/getting-started/installation/)). Then clone this repository and move into the project directory:
 
 ```shell
 git clone https://github.com/esonderegger/fecfile.git
 cd fecfile
 ```
 
-Then create a virtual environment for this project (I use the following commands, but there are several ways to get the desired result):
+Next, install the project and its dependencies:
 
 ```shell
-python3 -m venv venv
-source venv/bin/activate
+uv sync
 ```
 
-Next, install the dependencies:
+To run the tests:
 
 ```shell
-python setup.py install
-```
-
-Finally, make some changes, and run:
-
-```shell
-python tests.py
+uv run tests.py
 ```
 
 ## Thanks
