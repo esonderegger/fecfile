@@ -1,0 +1,44 @@
+[build-system]
+build-backend = "uv_build"
+requires = [ "uv-build>=0.10.9,<0.11" ]
+
+[project]
+name = "fecfile"
+version = "0.9.1"
+description = "A python parser for the .fec file format"
+readme = "README.md"
+keywords = [
+  "campaign",
+  "fec",
+  "finance",
+  "politics",
+]
+license = "Apache-2.0"
+license-files = [ "LICENSE" ]
+authors = [
+  { name = "Evan Sonderegger", email = "evan@rpy.xyz" },
+]
+requires-python = ">=3.10"
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+  "pytz>=2018.4",
+  "requests>=2.19.1",
+]
+urls."Bug Tracker" = "https://github.com/esonderegger/fecfile/issues"
+urls."Source Code" = "https://github.com/esonderegger/fecfile/"
+urls.Homepage = "https://esonderegger.github.io/fecfile/"
+
+[tool.uv]
+build-backend.module-root = ""
