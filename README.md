@@ -115,7 +115,7 @@ version = None
 with open('1263179.fec') as file:
     for line in file:
         if version is None:
-            header, version = fecfile.parse_header(line)
+            header, version, header_length = fecfile.parse_header(line)
         else:
             parsed = fecfile.parse_line(line, version)
             save_to_db(parsed)
