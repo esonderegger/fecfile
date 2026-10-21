@@ -88,6 +88,90 @@ class HasScheduleI(unittest.TestCase):
         self.assertEqual(sched_i['col_a_subtotal'], 99592.46)
 
 
+class ScheduleLColumns(unittest.TestCase):
+    def parse_electronic(self, fields, version, as_strings):
+        separator = ',' if version.startswith('5.') else chr(0x1c)
+        document = '\n'.join([
+            separator.join(['HDR', 'FEC', version]),
+            separator.join(['F3XN', 'C00123456']),
+            separator.join(fields),
+        ])
+        parsed = fecfile.loads(document, {'as_strings': as_strings})
+        return parsed['itemizations']['Schedule L'][0]
+
+    def test_electronic_columns(self):
+        # FEC electronic format, Sch L: fields 23/24 are Column A,
+        # while fields 40/41 are the corresponding Column B amounts.
+        fields = [
+            'SL', 'C00123456', 'L123', 'ACCOUNT1', 'Levin account',
+            '20260101', '20260131',
+        ] + ['0.00'] * 34
+        fields[21:24] = ['300.75', '100.25', '200.50']
+        fields[38:41] = ['4000.75', '1500.75', '2500.00']
+        versions = [
+            '6.1', '6.2', '6.3', '6.4', '7.0', '8.0', '8.1',
+            '8.2', '8.3', '8.4', '8.5',
+        ]
+        for version in versions:
+            for as_strings in (False, True):
+                with self.subTest(version=version, as_strings=as_strings):
+                    parsed = self.parse_electronic(fields, version, as_strings)
+                    expected = {
+                        'col_a_subtotal_period': '300.75',
+                        'col_a_disbursements_period': '100.25',
+                        'col_a_cash_on_hand_close_of_period': '200.50',
+                        'col_b_subtotal_period': '4000.75',
+                        'col_b_disbursements_period': '1500.75',
+                        'col_b_cash_on_hand_close_of_period': '2500.00',
+                    }
+                    for key, value in expected.items():
+                        self.assertEqual(
+                            parsed[key], value if as_strings else float(value))
+                    self.assertEqual(parsed['transaction_id_number'], 'L123')
+
+    def test_legacy_electronic_columns(self):
+        # Version 5 has Column A disbursements at field 22, with no
+        # Column A ending-cash field; Column B starts at field 23.
+        fields = [
+            'SL', 'C00123456', 'Levin account', 'ACCOUNT1',
+            '20030101', '20030131',
+        ] + ['0.00'] * 33 + ['', 'L123']
+        fields[20:22] = ['300.75', '100.25']
+        fields[36:39] = ['4000.75', '1500.75', '2500.00']
+        for version in ('5.0', '5.1', '5.2', '5.3'):
+            for as_strings in (False, True):
+                with self.subTest(version=version, as_strings=as_strings):
+                    parsed = self.parse_electronic(fields, version, as_strings)
+                    self.assertEqual(
+                        parsed['col_a_disbursements_period'],
+                        '100.25' if as_strings else 100.25)
+                    self.assertEqual(
+                        parsed['col_b_disbursements_period'],
+                        '1500.75' if as_strings else 1500.75)
+                    self.assertEqual(
+                        parsed['col_b_cash_on_hand_close_of_period'],
+                        '2500.00' if as_strings else 2500.00)
+                    self.assertNotIn(
+                        'col_a_cash_on_hand_close_of_period', parsed)
+                    self.assertEqual(parsed['transaction_id_number'], 'L123')
+
+    def test_paper_columns(self):
+        fields = ['SL', 'C00123456', 'Levin account'] + ['0.00'] * 34
+        fields += ['12345678901']
+        fields[18:20] = ['100.25', '200.50']
+        fields[35:37] = ['1500.75', '2500.00']
+        for version in ('P1', 'P2.6', 'P3.4'):
+            with self.subTest(version=version):
+                parsed = fecfile.parse_line(chr(0x1c).join(fields), version)
+                self.assertEqual(parsed['col_a_disbursements_period'], 100.25)
+                self.assertEqual(
+                    parsed['col_a_cash_on_hand_close_of_period'], 200.50)
+                self.assertEqual(parsed['col_b_disbursements_period'], 1500.75)
+                self.assertEqual(
+                    parsed['col_b_cash_on_hand_close_of_period'], 2500.00)
+                self.assertEqual(parsed['image_number'], '12345678901')
+
+
 class HandleF1FromWebForms(unittest.TestCase):
     def test_request(self):
         parsed = fecfile.from_http(1229011)
@@ -415,6 +499,9 @@ if __name__ == '__main__':
         HandleScheduleCDates('test_dates'),
         HasScheduleD('test_request'),
         HasScheduleI('test_request'),
+        ScheduleLColumns('test_electronic_columns'),
+        ScheduleLColumns('test_legacy_electronic_columns'),
+        ScheduleLColumns('test_paper_columns'),
         HandleF1FromWebForms('test_request'),
         HandlePaperF1M('test_request'),
         HandleSpaceInFormType('test_request'),
